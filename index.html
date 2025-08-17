@@ -96,16 +96,72 @@
             bottom: 20px;
             right: 20px;
             background: white;
-            padding: 15px;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             z-index: 1000;
             max-width: 200px;
+            overflow: hidden;
         }
         
-        .legend h4 {
-            margin: 0 0 10px 0;
-            font-size: 14px;
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 15px 10px 15px;
+            border-bottom: 1px solid #eee;
+            background: #f8f9fa;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .panel-header h3, .panel-header h4 {
+            margin: 0;
+            color: #333;
+        }
+        
+        .panel-toggle {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            width: 20px;
+            height: 40px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .panel-toggle:hover {
+            background: #0056b3;
+            width: 25px;
+        }
+        
+        .panel-content {
+            padding: 15px;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+        
+        .panel-hidden {
+            transform: translateX(-100%);
+        }
+        
+        .panel-hidden .panel-toggle {
+            right: -20px;
+        }
+        
+        .info-panel {
+            transition: transform 0.3s ease;
+        }
+        
+        .legend {
+            transition: transform 0.3s ease;
         }
         
         .legend-item {
@@ -164,30 +220,30 @@
 <body>
     <div id="map"></div>
     
-    <div class="info-panel">
-        <h3>MBTA Tracker</h3>
-        
-        <div class="filter-controls">
-            <h4>Show/Hide Lines:</h4>
-            <div id="filter-checkboxes">
-                <!-- Dynamic filter checkboxes will be generated here -->
-            </div>
+    <div class="info-panel" id="info-panel" style="display: none;">
+        <button class="panel-toggle" onclick="togglePanel('info-panel')">◀</button>
+        <div class="panel-header">
+            <h3>MBTA Tracker</h3>
         </div>
         
-        <div class="stats">
-            <strong>Total Stops:</strong> <span id="total-stops">0</span><br>
-            <strong>Visible Stops:</strong> <span id="visible-stops">0</span>
+        <div class="panel-content">
+            <div class="filter-controls">
+                <h4>Show/Hide Lines:</h4>
+                <div id="filter-checkboxes">
+                    <!-- Dynamic filter checkboxes will be generated here -->
+                </div>
+            </div>
+            
+            <div class="stats">
+                <strong>Total Stops:</strong> <span id="total-stops">0</span><br>
+                <strong>Visible Stops:</strong> <span id="visible-stops">0</span>
+            </div>
         </div>
     </div>
     
 
     
-    <div class="legend">
-        <h4>Legend</h4>
-        <div id="legend-items">
-            <!-- Dynamic legend items will be generated here -->
-        </div>
-    </div>
+
 
     <!-- Include the MBTA stops data -->
     <script src="mbta-stops-accurate.js"></script>
@@ -202,19 +258,9 @@
         let lastAmtrakUpdateTime = 0;
         
         // Check if data loaded properly
-        console.log('Checking if mbtaStopsData is available:', typeof mbtaStopsData);
         if (typeof mbtaStopsData === 'undefined') {
-            console.error('mbtaStopsData is not defined! Data file may not have loaded properly.');
-            console.error('This could be due to:');
-            console.error('1. JavaScript syntax error in mbta-stops-accurate.js');
-            console.error('2. File not found or not accessible');
-            console.error('3. Network/server issue');
-            document.getElementById('status').textContent = 'Error: MBTA data not loaded - Check browser console for details';
+            document.getElementById('status').textContent = 'Error: MBTA data not loaded';
             document.getElementById('status').style.color = 'red';
-        } else {
-            console.log('MBTA data loaded successfully. Lines found:', Object.keys(mbtaStopsData));
-            console.log('Total routes:', Object.keys(mbtaStopsData).length);
-            console.log('Sample route data:', Object.keys(mbtaStopsData)[0], mbtaStopsData[Object.keys(mbtaStopsData)[0]]);
         }
         
         // Initialize the map centered on Boston
@@ -237,11 +283,7 @@
                 layers[lineName] = L.layerGroup();
                 map.addLayer(layers[lineName]);
             });
-        } else {
-            console.error('Cannot initialize layers: mbtaStopsData is undefined');
         }
-        
-
         
         // Generate filter checkboxes dynamically
         const filterContainer = document.getElementById('filter-checkboxes');
@@ -273,8 +315,6 @@
                 updateStats();
             });
             });
-        } else {
-            console.error('Cannot generate filters: mbtaStopsData is undefined');
         }
         
         // Color scheme for different lines
@@ -302,55 +342,13 @@
             'Providence/Stoughton Line': '#800080'
         };
         
-        // Generate legend with one entry per color
-        const legendContainer = document.getElementById('legend-items');
-        if (typeof mbtaStopsData !== 'undefined') {
-            const colorMap = new Map();
-            
-            // Group routes by color
-            Object.keys(mbtaStopsData).forEach(lineName => {
-                const color = lineColors[lineName] || '#666';
-                if (!colorMap.has(color)) {
-                    colorMap.set(color, []);
-                }
-                colorMap.get(color).push(lineName);
-            });
-            
-            // Create legend entries
-            colorMap.forEach((routes, color) => {
-                const legendDiv = document.createElement('div');
-                legendDiv.className = 'legend-item';
-                
-                const colorDiv = document.createElement('div');
-                colorDiv.className = 'legend-color';
-                colorDiv.style.background = color;
-                
-                const span = document.createElement('span');
-                
-                // Simplify labels for commuter rail and green line
-                if (color === '#800080') {
-                    span.textContent = 'Commuter Rail';
-                } else if (color === '#008000') {
-                    span.textContent = 'Green Line';
-                } else {
-                    span.textContent = routes.join(', ');
-                }
-                
-                legendDiv.appendChild(colorDiv);
-                legendDiv.appendChild(span);
-                legendContainer.appendChild(legendDiv);
-            });
-        } else {
-            console.error('Cannot generate legend: mbtaStopsData is undefined');
-        }
+
         
                     // Create markers and tracks for all routes
             const markers = [];
             const stopMarkers = new Map(); // Track markers by stopId for multi-line stops
             
             if (typeof mbtaStopsData !== 'undefined' && typeof routeShapes !== 'undefined') {
-                console.log('Starting optimized rendering...');
-                console.log('Number of routes with shapes:', Object.keys(routeShapes).length);
                 
                 let totalTracksDrawn = 0;
                 let totalStopsDrawn = 0;
@@ -465,7 +463,7 @@
                     if (endIndex < routes.length) {
                         setTimeout(() => processChunk(endIndex), 10); // 10ms delay between chunks
                     } else {
-                        console.log(`Rendering complete: ${totalTracksDrawn} tracks, ${totalStopsDrawn} stops`);
+        
                     }
                 };
                 
@@ -504,6 +502,22 @@
         
 
         
+        // Panel toggle functionality
+        function togglePanel(panelId) {
+            const panel = document.getElementById(panelId);
+            const toggle = panel.querySelector('.panel-toggle');
+            
+            if (panel.classList.contains('panel-hidden')) {
+                // Show panel
+                panel.classList.remove('panel-hidden');
+                toggle.textContent = '◀';
+            } else {
+                // Hide panel
+                panel.classList.add('panel-hidden');
+                toggle.textContent = '▶';
+            }
+        }
+        
         // Initialize stats
         updateStats();
         
@@ -517,14 +531,7 @@
             position: 'bottomleft'
         }).addTo(map);
         
-        console.log('MBTA Tracker OSM test map loaded successfully!');
-        if (typeof mbtaStopsData !== 'undefined') {
-            console.log('Total stops loaded:', Object.values(mbtaStopsData).reduce((sum, stops) => sum + stops.length, 0));
-        } else {
-            console.log('Total stops loaded: 0 (data not available)');
-        }
-        console.log('Map center:', map.getCenter());
-        console.log('Map zoom:', map.getZoom());
+
         
 
         
@@ -571,21 +578,23 @@
             trainMarkers.clear();
             
             // Create new train markers
-            trains.forEach(train => {
-                if (train.attributes && train.attributes.latitude && train.attributes.longitude) {
-                    const trainId = train.id;
-                    const lat = train.attributes.latitude;
-                    const lng = train.attributes.longitude;
-                    const heading = train.attributes.heading || 0;
-                    const speed = train.attributes.speed || 0;
-                    const routeId = train.relationships?.route?.data?.id;
+                            trains.forEach(train => {
+                    if (train.attributes && train.attributes.latitude && train.attributes.longitude) {
+                        const trainId = train.id;
+                        const lat = train.attributes.latitude;
+                        const lng = train.attributes.longitude;
+                        const heading = train.attributes.heading || 0;
+                        const speed = train.attributes.speed || 0;
+                        const routeId = train.relationships?.route?.data?.id;
+                        
+
                     
                     // Get route name and color with better matching
                     let routeName = 'Unknown Route';
                     let color = '#666';
                     
                     if (routeId && mbtaStopsData) {
-                        console.log(`Matching route ID: "${routeId}" to available routes...`);
+
                         
                         // Better route matching logic
                         Object.keys(mbtaStopsData).forEach(name => {
@@ -665,12 +674,18 @@
                         zIndexOffset: 1000
                     });
                     
+                    // Get direction information (inbound/outbound)
+                    const direction = train.attributes.direction_id === 0 ? 'Inbound' : 'Outbound';
+                    
                     // Create popup with train info
                     const popupContent = `
-                        <div style="color: ${color}; font-weight: bold;">🚂 Live Train</div>
+                        <div style="color: ${color}; font-weight: bold;">
+                            <img src="${trainIcon.options.iconUrl}" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px;">
+                            Live Train
+                        </div>
                         <b>Route:</b> ${routeName}<br>
-                        <b>Speed:</b> ${Math.round(speed * 2.237)} mph<br>
-                        <b>Direction:</b> ${heading}°<br>
+                        <b>Speed:</b> ${speed > 0 ? Math.round(speed * 2.237) + ' mph' : 'Stopped'}<br>
+                        <b>Direction ID:</b> ${train.attributes.direction_id}<br>
                         <b>Position:</b> ${lat.toFixed(6)}, ${lng.toFixed(6)}<br>
                         <b>Last Update:</b> ${new Date().toLocaleTimeString()}
                     `;
