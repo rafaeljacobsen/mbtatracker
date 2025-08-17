@@ -1,0 +1,641 @@
+trip_id,trip_property_id,value
+68992286,note,Waits at South Station for last Red Line train
+68992286,trip_type,wait
+68992457,note,Waits at Mattapan for last Mattapan Trolley train
+68992457,trip_type,wait
+68992459,note,Waits at Ruggles for last Orange Line train
+68992459,trip_type,wait
+68992794,note,Waits at South Station for last Red Line train
+68992794,trip_type,wait
+68993182,note,Waits at Temple Pl @ Washington St for last Red Line and Orange Line trains
+68993182,trip_type,wait
+68993272,note,Waits at Back Bay for last Orange Line train
+68993272,trip_type,wait
+68995144,note,Waits at Temple Pl @ Washington St for last Red Line and Orange Line trains
+68995144,trip_type,wait
+68995279,note,Waits at Mattapan for last Mattapan Trolley train
+68995279,trip_type,wait
+68995296,note,Waits at Ruggles for last Orange Line train
+68995296,trip_type,wait
+68995777,note,Waits at Back Bay for last Orange Line train
+68995777,trip_type,wait
+68995802,note,Waits at South Station for last Red Line train
+68995802,trip_type,wait
+68996111,note,Waits at South Station for last Red Line train
+68996111,trip_type,wait
+69110873,note,Waits at Ruggles for last Orange Line train
+69110873,trip_type,wait
+69110874,note,Waits at Mattapan for last Mattapan Trolley train
+69110874,trip_type,wait
+69110964,note,Waits at Back Bay for last Orange Line train
+69110964,trip_type,wait
+69111419,note,Waits at Temple Pl @ Washington St for last Red Line and Orange Line trains
+69111419,trip_type,wait
+69111936,note,Waits at South Station for last Red Line train
+69111936,trip_type,wait
+69111999,note,Waits at South Station for last Red Line train
+69111999,trip_type,wait
+69332242,note,Waits at Ashmont for last Red Line train
+69332242,trip_type,wait
+69332433,note,Waits at Ashmont for last Red Line train
+69332433,trip_type,wait
+69332669,note,Waits at Ashmont for last Red Line train
+69332669,trip_type,wait
+69363256,note,Waits at Lechmere for last Green Line train
+69363256,trip_type,wait
+69363342,note,Waits at Main St @ Kendall Station - Red Line for last Red Line train
+69363342,trip_type,wait
+69363572,note,Waits at Harvard for last Red Line train
+69363572,trip_type,wait
+69363753,note,Waits at Lechmere for last Green Line train
+69363753,trip_type,wait
+69363856,note,Waits at Lechmere for last Green Line train
+69363856,trip_type,wait
+69363892,note,Waits at Lechmere for last Green Line train
+69363892,trip_type,wait
+69364280,note,Waits at Western Ave @ Green St for last Red Line train
+69364280,trip_type,wait
+69364410,note,Waits at Harvard for last Red Line train
+69364410,trip_type,wait
+69364633,note,Waits at Green St @ Magazine St for last Red Line train
+69364633,trip_type,wait
+69364881,note,Waits at Harvard for last Red Line train
+69364881,trip_type,wait
+69364931,note,Waits at Harvard for last Red Line train
+69364931,trip_type,wait
+69365794,note,Waits at Harvard for last Red Line train
+69365794,trip_type,wait
+69365974,note,Waits at Harvard for last Red Line train
+69365974,trip_type,wait
+69366023,note,Waits at Green St @ Magazine St for last Red Line train
+69366023,trip_type,wait
+69366145,note,Waits at Lechmere for last Green Line train
+69366145,trip_type,wait
+69366184,note,Waits at Lechmere for last Green Line train
+69366184,trip_type,wait
+69366253,note,Waits at Lechmere for last Green Line train
+69366253,trip_type,wait
+69366339,note,Waits at Western Ave @ Green St for last Red Line train
+69366339,trip_type,wait
+69366640,note,Waits at Harvard for last Red Line train
+69366640,trip_type,wait
+69384250,note,Waits at Harvard for last Red Line train
+69384250,trip_type,wait
+69384423,note,Waits at Green St @ Magazine St for last Red Line train
+69384423,trip_type,wait
+69384577,note,Waits at Harvard for last Red Line train
+69384577,trip_type,wait
+69384579,note,Waits at Harvard for last Red Line train
+69384579,trip_type,wait
+69384711,note,Waits at Lechmere for last Green Line train
+69384711,trip_type,wait
+69384805,note,Waits at Magazine St @ Green St for last Red Line train
+69384805,trip_type,wait
+69384837,note,Waits at Western Ave @ Green St for last Red Line train
+69384837,trip_type,wait
+69384997,note,Waits at Lechmere for last Green Line train
+69384997,trip_type,wait
+69385042,note,Waits at Lechmere for last Green Line train
+69385042,trip_type,wait
+69385255,note,Waits at Lechmere for last Green Line train
+69385255,trip_type,wait
+69385328,note,Waits at Harvard for last Red Line train
+69385328,trip_type,wait
+69565991,note,Waits at Ruggles for last Orange Line train
+69565991,trip_type,wait
+69566032,note,Waits at Tremont St opp Temple Pl for last Red Line and Green Line trains
+69566032,trip_type,wait
+69566172,note,Waits at W Broadway @ Broadway Station for last Red Line train
+69566172,trip_type,wait
+69566260,note,Waits at Massachusetts Ave opp Holyoke St for last Red Line train
+69566260,trip_type,wait
+69566266,note,Waits at Nubian for last Silver Line bus
+69566266,trip_type,wait
+69566368,note,Waits at W Broadway @ Broadway Station for last Red Line train
+69566368,trip_type,wait
+69566500,note,Waits at Ruggles for last Orange Line train
+69566500,trip_type,wait
+69566707,note,Waits at Nubian for last Silver Line bus
+69566707,trip_type,wait
+69566716,note,Waits at Harvard Sq @ Garden St - Dawes Island for last Red Line train
+69566716,trip_type,wait
+69566859,note,Waits at Kenmore for last Green Line train
+69566859,trip_type,wait
+69566913,note,Waits at Boylston St @ Dartmouth St for last Green Line train
+69566913,trip_type,wait
+69566994,note,Waits at Andrew for last Red Line train
+69566994,trip_type,wait
+69566995,note,Waits at Forest Hills for last Orange Line train
+69566995,trip_type,wait
+69567188,note,Waits at Ashmont for last Red Line train
+69567188,trip_type,wait
+69567258,note,Waits at Ruggles for last Orange Line train
+69567258,trip_type,wait
+69570962,note,Waits at Ruggles for last Orange Line train
+69570962,trip_type,wait
+69570990,note,Waits at Tremont St opp Temple Pl for last Red Line and Green Line trains
+69570990,trip_type,wait
+69571097,note,Waits at W Broadway @ Broadway Station for last Red Line train
+69571097,trip_type,wait
+69571290,note,Waits at W Broadway @ Broadway Station for last Red Line train
+69571290,trip_type,wait
+69571326,note,Waits at Ruggles for last Orange Line train
+69571326,trip_type,wait
+69571399,note,Waits at Green St @ Pearl St for last Red Line train
+69571399,trip_type,wait
+69571405,note,Waits at Ruggles for last Orange Line train
+69571405,trip_type,wait
+69571537,note,Waits at Boylston St @ Dartmouth St for last Green Line train
+69571537,trip_type,wait
+69571602,note,Waits at Kenmore for last Green Line train
+69571602,trip_type,wait
+69571789,note,Waits at Ashmont for last Red Line train
+69571789,trip_type,wait
+69571844,note,Waits at Ruggles for last Orange Line train
+69571844,trip_type,wait
+69571920,note,Waits at Andrew for last Red Line train
+69571920,trip_type,wait
+69571924,note,Waits at Forest Hills for last Orange Line train
+69571924,trip_type,wait
+69572031,note,Waits at Harvard Sq @ Garden St - Dawes Island for last Red Line train
+69572031,trip_type,wait
+69572056,note,Waits at Nubian for last Silver Line bus
+69572056,trip_type,wait
+69572267,note,Waits at Nubian for last Silver Line bus
+69572267,trip_type,wait
+69572370,note,Waits at Massachusetts Ave opp Holyoke St for last Red Line train
+69572370,trip_type,wait
+69702643,note,Waits at W Broadway @ Broadway Station for last Red Line train
+69702643,trip_type,wait
+69702761,note,Waits at W Broadway @ Broadway Station for last Red Line train
+69702761,trip_type,wait
+69703160,note,Waits at Nubian for last Silver Line bus
+69703160,trip_type,wait
+69703162,note,Waits at Nubian for last Silver Line bus
+69703162,trip_type,wait
+69703412,note,Waits at Harvard Sq @ Garden St - Dawes Island for last Red Line train
+69703412,trip_type,wait
+69703507,note,Waits at Massachusetts Ave opp Holyoke St for last Red Line train
+69703507,trip_type,wait
+69703730,note,Waits at Tremont St opp Temple Pl for last Red Line and Green Line trains
+69703730,trip_type,wait
+69704057,note,Waits at Ruggles for last Orange Line train
+69704057,trip_type,wait
+69704060,note,Waits at Ruggles for last Orange Line train
+69704060,trip_type,wait
+69704062,note,Waits at Ruggles for last Orange Line train
+69704062,trip_type,wait
+69704625,note,Waits at Andrew for last Red Line train
+69704625,trip_type,wait
+69704627,note,Waits at Boylston St @ Dartmouth St for last Green Line train
+69704627,trip_type,wait
+69704630,note,Waits at Forest Hills for last Orange Line train
+69704630,trip_type,wait
+69705020,note,Waits at Green St @ Pearl St for last Red Line train
+69705020,trip_type,wait
+69705117,note,Waits at Ashmont for last Red Line train
+69705117,trip_type,wait
+69705123,note,Waits at Ruggles for last Orange Line train
+69705123,trip_type,wait
+69705344,note,Waits at Kenmore for last Green Line train
+69705344,trip_type,wait
+69728810,note,Waits at Wellington for last Orange Line train
+69728810,trip_type,wait
+69741540,note,Waits at Wellington for last Orange Line train
+69741540,trip_type,wait
+69741601,note,Waits at Harvard for last Red Line train
+69741601,trip_type,wait
+69742228,note,Waits at Sullivan Square for last Orange Line train
+69742228,trip_type,wait
+69742328,note,Waits at Sullivan Square for last Orange Line train
+69742328,trip_type,wait
+69742485,note,Waits at Sullivan Square for last Orange Line train
+69742485,trip_type,wait
+69742582,note,Waits at Surface Rd @ Hanover St for last Orange Line train
+69742582,trip_type,wait
+69742776,note,Waits at Wellington for last Orange Line train
+69742776,trip_type,wait
+69742777,note,Waits at Malden Center for last Orange Line train
+69742777,trip_type,wait
+69742817,note,Waits at Wellington for last Orange Line train
+69742817,trip_type,wait
+69743663,note,Waits at Malden Center for last Orange Line train
+69743663,trip_type,wait
+69743826,note,Waits at Harvard for last Red Line train
+69743826,trip_type,wait
+69743952,note,Waits at Wellington for last Orange Line train
+69743952,trip_type,wait
+69744480,note,Waits at Sullivan Square for last Orange Line train
+69744480,trip_type,wait
+69744585,note,Waits at Sullivan Square for last Orange Line train
+69744585,trip_type,wait
+69744679,note,Waits at Surface Rd @ Hanover St for last Orange Line and Green Line trains
+69744679,trip_type,wait
+69744866,note,Waits at Wellington for last Orange Line train
+69744866,trip_type,wait
+69817538,note,Waits at Forest Hills for last Orange Line train
+69817538,trip_type,wait
+69817893,note,Waits at Ashmont for last Red Line train
+69817893,note,Waits at Mattapan for last Mattapan Trolley train
+69817893,trip_type,wait
+69817995,note,Waits at Forest Hills for last Orange Line train
+69817995,trip_type,wait
+69818174,note,Waits at Forest Hills for last Orange Line train
+69818174,trip_type,wait
+69818536,note,Waits at Ashmont for last Red Line train
+69818536,trip_type,wait
+69818559,note,Waits at Forest Hills for last Orange Line train
+69818559,trip_type,wait
+69819326,note,Waits at Forest Hills for last Orange Line train
+69819326,trip_type,wait
+69819566,note,Waits at Forest Hills for last Orange Line train
+69819566,trip_type,wait
+69819744,note,Waits at Forest Hills for last Orange Line train
+69819744,trip_type,wait
+69820223,note,Waits at Ashmont for last Red Line train
+69820223,note,Waits at Mattapan for last Mattapan Trolley train
+69820223,trip_type,wait
+69820433,note,Waits at Forest Hills for last Orange Line train
+69820433,trip_type,wait
+69820913,note,Waits at Ashmont for last Red Line train
+69820913,trip_type,wait
+69821390,note,Waits at Forest Hills for last Orange Line train
+69821390,trip_type,wait
+69821522,note,Waits at Forest Hills for last Orange Line train
+69821522,trip_type,wait
+69821793,note,Waits at Forest Hills for last Orange Line train
+69821793,trip_type,wait
+69896778,note,Waits at Wellington for last Orange Line train
+69896778,trip_type,wait
+69896862,note,Waits at Wellington for last Orange Line train
+69896862,trip_type,wait
+69897331,note,Waits at Wellington for last Orange Line train
+69897331,trip_type,wait
+69897855,note,Waits at Surface Rd @ Hanover St for last Orange Line and Green Line trains
+69897855,trip_type,wait
+69897954,note,Waits at Sullivan Square for last Orange Line train
+69897954,trip_type,wait
+69898110,note,Waits at Sullivan Square for last Orange Line train
+69898110,trip_type,wait
+69898205,note,Waits at Wellington for last Orange Line train
+69898205,trip_type,wait
+69898297,note,Waits at Harvard for last Red Line train
+69898297,trip_type,wait
+69898547,note,Waits at Malden Center for last Orange Line train
+69898547,trip_type,wait
+69898628,note,Waits at Sullivan Square for last Orange Line train
+69898628,trip_type,wait
+69979858,note,Waits at Maverick for last Blue Line train
+69979858,trip_type,wait
+69979924,note,Waits at Wonderland for last Blue Line train
+69979924,trip_type,wait
+69980047,note,Waits at Maverick for last Blue Line train
+69980047,trip_type,wait
+69980368,note,Waits at Maverick for last Blue Line train
+69980368,trip_type,wait
+69980593,note,Waits at Maverick for last Blue Line train
+69980593,trip_type,wait
+69980646,note,Waits at Wonderland for last Blue Line train
+69980646,trip_type,wait
+69988794,note,Waits at Fields Corner for last Red Line train
+69988794,trip_type,wait
+69988903,note,Waits at Quincy Center for last Red Line train
+69988903,trip_type,wait
+69989239,note,Waits at Fields Corner for last Red Line train
+69989239,trip_type,wait
+69989312,note,Waits at Quincy Center for last Red Line train
+69989312,trip_type,wait
+70016126,note,Waits at Maverick for last Blue Line train
+70016126,trip_type,wait
+70016212,note,Waits at Wonderland for last Blue Line train
+70016212,trip_type,wait
+70016339,note,Waits at Congress St @ Haymarket Sta for last Orange Line and Green Line trains
+70016339,trip_type,wait
+70016435,note,Waits at Maverick for last Blue Line train
+70016435,trip_type,wait
+70039431,note,Waits at Quincy Center for last Red Line train
+70039431,trip_type,wait
+70039551,note,Waits at Fields Corner for last Red Line train
+70039551,trip_type,wait
+70040291,note,Waits at Ashmont for last Red Line train
+70040291,trip_type,wait
+70054012,note,Waits at Orient Heights for last Blue Line train
+70054012,trip_type,wait
+70054106,note,Waits at Orient Heights for last Blue Line train
+70054106,trip_type,wait
+BungalowWKDY-754957-1684,note,Waits at Fairmount for Train 1764
+BungalowWKDY-754957-1684,trip_type,wait
+BungalowWKDY-755080-1620,note,Waits at Fairmount for Train 1716
+BungalowWKDY-755080-1620,trip_type,wait
+BungalowWKDY-755079-1618,note,Waits at Fairmount for Train 714
+BungalowWKDY-755079-1618,trip_type,wait
+BungalowWKDY-755081-1624,note,Waits at Fairmount for Train 718
+BungalowWKDY-755081-1624,trip_type,wait
+BungalowWKDY-754935-1680,note,Waits at Fairmount for Train 762
+BungalowWKDY-754935-1680,trip_type,wait
+BungalowWKDY-755077-1614,note,Waits at Fairmount for Train 710
+BungalowWKDY-755077-1614,trip_type,wait
+BungalowWKDY-755022-856,note,Waits at Readville for Train 1756
+BungalowWKDY-755022-856,trip_type,wait
+BungalowWKDY-755040-908,note,Waits at Readville for Train 1708
+BungalowWKDY-755040-908,trip_type,wait
+BungalowWKDY-755029-874,note,Waits at Readville for Train 776
+BungalowWKDY-755029-874,trip_type,wait
+BungalowWKDY-755068-984,note,Waits at Readville for Train 784
+BungalowWKDY-755068-984,trip_type,wait
+BungalowWKDY-755036-892,note,Waits at Readville for Train 792
+BungalowWKDY-755036-892,trip_type,wait
+BungalowWKDY-754922-1775,note,Waits at Readville for Train 875
+BungalowWKDY-754922-1775,trip_type,wait
+BungalowWKDY-754931-1785,note,Waits at Readville for Train 885
+BungalowWKDY-754931-1785,trip_type,wait
+BungalowWKDY-754466-689,note,Waits at Forest Hills for Train 889
+BungalowWKDY-754466-689,trip_type,wait
+BungalowWKDY-754467-693,note,Waits at Forest Hills for Train 893
+BungalowWKDY-754467-693,trip_type,wait
+BungalowWKDY-754995-793,note,Waits at Readville for Train 893
+BungalowWKDY-754995-793,trip_type,wait
+BungalowWKND-755473-5806,note,Waits at Readville for Train 5706
+BungalowWKND-755473-5806,trip_type,wait
+BungalowWKND-755494-5884,note,Waits at Readville for Train 5784
+BungalowWKND-755494-5884,trip_type,wait
+BungalowWKND-755496-5892,note,Waits at Readville for Train 5792
+BungalowWKND-755496-5892,trip_type,wait
+BungalowWKND-754262-5715,note,Waits at Readville for Train 5815
+BungalowWKND-754262-5715,trip_type,wait
+BungalowWKND-755476-5785,note,Waits at Readville for Train 5885
+BungalowWKND-755476-5785,trip_type,wait
+BungalowWKND-755474-5793,note,Waits at Readville for Train 5893
+BungalowWKND-755474-5793,trip_type,wait
+BungalowWKND-755486-5846,note,Waits at Readville for Train 5746
+BungalowWKND-755486-5846,trip_type,wait
+893MontoThuUpdate-742603-908,note,Waits at Readville for Train 1708
+893MontoThuUpdate-742603-908,trip_type,wait
+893MontoThuUpdate-742585-856,note,Waits at Readville for Train 1756
+893MontoThuUpdate-742585-856,trip_type,wait
+893MontoThuUpdate-742592-874,note,Waits at Readville for Train 776
+893MontoThuUpdate-742592-874,trip_type,wait
+893MontoThuUpdate-742849-984,note,Waits at Readville for Train 784
+893MontoThuUpdate-742849-984,trip_type,wait
+893MontoThuUpdate-745602-892,note,Waits at Readville for Train 792
+893MontoThuUpdate-745602-892,trip_type,wait
+893MontoThuUpdate-742921-2002,note,Waits at Braintree for Train 1002
+893MontoThuUpdate-742921-2002,trip_type,wait
+893MontoThuUpdate-742975-1047,note,Waits at Braintree for Train 2047
+893MontoThuUpdate-742975-1047,trip_type,wait
+893MontoThuUpdate-742924-1991,note,Waits at East Taunton for Train 2041
+893MontoThuUpdate-742924-1991,trip_type,wait
+893MontoThuUpdate-742926-1987,note,Waits at East Taunton for Train 2037
+893MontoThuUpdate-742926-1987,trip_type,wait
+893MontoThuUpdate-742928-1983,note,Waits at East Taunton for Train 2033
+893MontoThuUpdate-742928-1983,trip_type,wait
+893MontoThuUpdate-742934-1971,note,Waits at East Taunton for Train 2021
+893MontoThuUpdate-742934-1971,trip_type,wait
+893MontoThuUpdate-742894-2089,note,Waits at East Taunton for Train 1939
+893MontoThuUpdate-742894-2089,trip_type,wait
+893MontoThuUpdate-742896-2075,note,Waits at East Taunton for Train 1925
+893MontoThuUpdate-742896-2075,trip_type,wait
+893MontoThuUpdate-742897-2069,note,Waits at East Taunton for Train 1919
+893MontoThuUpdate-742897-2069,trip_type,wait
+893MontoThuUpdate-742898-2067,note,Waits at East Taunton for Train 1917
+893MontoThuUpdate-742898-2067,trip_type,wait
+893MontoThuUpdate-742899-2065,note,Waits at East Taunton for Train 1915
+893MontoThuUpdate-742899-2065,trip_type,wait
+893MontoThuUpdate-742901-2061,note,Waits at East Taunton for Train 1911
+893MontoThuUpdate-742901-2061,trip_type,wait
+893MontoThuUpdate-742902-2059,note,Waits at East Taunton for Train 1909
+893MontoThuUpdate-742902-2059,trip_type,wait
+893MontoThuUpdate-742903-2055,note,Waits at East Taunton for Train 1905
+893MontoThuUpdate-742903-2055,trip_type,wait
+893MontoThuUpdate-742938-1942,note,Waits at East Taunton for Train 2092
+893MontoThuUpdate-742938-1942,trip_type,wait
+893MontoThuUpdate-742940-1936,note,Waits at East Taunton for Train 2086
+893MontoThuUpdate-742940-1936,trip_type,wait
+893MontoThuUpdate-742946-1912,note,Waits at East Taunton for Train 2062
+893MontoThuUpdate-742946-1912,trip_type,wait
+893MontoThuUpdate-742905-2044,note,Waits at East Taunton for Train 1994
+893MontoThuUpdate-742905-2044,trip_type,wait
+893MontoThuUpdate-742907-2038,note,Waits at East Taunton for Train 1988
+893MontoThuUpdate-742907-2038,trip_type,wait
+893MontoThuUpdate-742909-2034,note,Waits at East Taunton for Train 1984
+893MontoThuUpdate-742909-2034,trip_type,wait
+893MontoThuUpdate-742911-2030,note,Waits at East Taunton for Train 1980
+893MontoThuUpdate-742911-2030,trip_type,wait
+893MontoThuUpdate-742913-2028,note,Waits at East Taunton for Train 1978
+893MontoThuUpdate-742913-2028,trip_type,wait
+893MontoThuUpdate-742914-2026,note,Waits at East Taunton for Train 1976
+893MontoThuUpdate-742914-2026,trip_type,wait
+893MontoThuUpdate-742915-2024,note,Waits at East Taunton for Train 1974
+893MontoThuUpdate-742915-2024,trip_type,wait
+893MontoThuUpdate-742916-2022,note,Waits at East Taunton for Train 1972
+893MontoThuUpdate-742916-2022,trip_type,wait
+893MontoThuUpdate-742919-2016,note,Waits at East Taunton for Train 1966
+893MontoThuUpdate-742919-2016,trip_type,wait
+893MontoThuUpdate-742920-2010,note,Waits at East Taunton for Train 1960
+893MontoThuUpdate-742920-2010,trip_type,wait
+893MontoThuUpdate-742558-793,note,Waits at Readville for Train 893
+893MontoThuUpdate-742558-793,trip_type,wait
+893MontoThuUpdate-742446-1785,note,Waits at Readville for Train 885
+893MontoThuUpdate-742446-1785,trip_type,wait
+893MontoThuUpdate-742444-1775,note,Waits at Readville for Train 875
+893MontoThuUpdate-742444-1775,trip_type,wait
+893MontoThuUpdate-742537-689,note,Waits at Forest Hills for Train 889
+893MontoThuUpdate-742537-689,trip_type,wait
+893MontoThuUpdate-742538-693,note,Waits at Forest Hills for Train 893
+893MontoThuUpdate-742538-693,trip_type,wait
+893MontoThuUpdate-742669-565,note,Waits at West Natick for Train 1561
+893MontoThuUpdate-742669-565,trip_type,wait
+893MontoThuUpdate-742667-571,note,Waits at West Natick for Train 1567
+893MontoThuUpdate-742667-571,trip_type,wait
+893MontoThuUpdate-742671-559,note,Waits at West Natick for Train 1555
+893MontoThuUpdate-742671-559,trip_type,wait
+893MontoThuUpdate-742673-553,note,Waits at West Natick for Train 1551
+893MontoThuUpdate-742673-553,trip_type,wait
+893MontoThuUpdate-742653-1522,note,Waits at West Natick for Train 518
+893MontoThuUpdate-742653-1522,trip_type,wait
+893MontoThuUpdate-742655-1516,note,Waits at West Natick for Train 514
+893MontoThuUpdate-742655-1516,trip_type,wait
+893MontoThuUpdate-742656-1512,note,Waits at West Natick for Train 510
+893MontoThuUpdate-742656-1512,trip_type,wait
+893MontoThuUpdate-742688-519,note,Waits at Framingham for Train 1517
+893MontoThuUpdate-742688-519,trip_type,wait
+893MontoThuUpdate-742847-515,note,Waits at Framingham for Train 1511
+893MontoThuUpdate-742847-515,trip_type,wait
+893MontoThuUpdate-742649-1562,note,Waits at Framingham for Train 560
+893MontoThuUpdate-742649-1562,trip_type,wait
+893MontoThuUpdate-742650-1558,note,Waits at Framingham for Train 556
+893MontoThuUpdate-742650-1558,trip_type,wait
+893MontoThuUpdate-742653-1522,note,Waits at Framingham for Train 520
+893MontoThuUpdate-742653-1522,trip_type,wait
+5893SundayUpdate-743366-6047,note,Waits at Braintree for Train 7047
+5893SundayUpdate-743366-6047,trip_type,wait
+5893SundayUpdate-743338-6979,note,Waits at East Taunton for Train 7029
+5893SundayUpdate-743338-6979,trip_type,wait
+FoxboroPlatform-746565-908,note,Waits at Readville for Train 1708
+FoxboroPlatform-746565-908,trip_type,wait
+FoxboroPlatform-746551-856,note,Waits at Readville for Train 1756
+FoxboroPlatform-746551-856,trip_type,wait
+FoxboroPlatform-746558-874,note,Waits at Readville for Train 776
+FoxboroPlatform-746558-874,trip_type,wait
+FoxboroPlatform-746742-984,note,Waits at Readville for Train 784
+FoxboroPlatform-746742-984,trip_type,wait
+FoxboroPlatform-746938-892,note,Waits at Readville for Train 792
+FoxboroPlatform-746938-892,trip_type,wait
+FoxboroPlatform-746505-689,note,Waits at Forest Hills for Train 889
+FoxboroPlatform-746505-689,trip_type,wait
+FoxboroPlatform-746506-693,note,Waits at Forest Hills for Train 893
+FoxboroPlatform-746506-693,trip_type,wait
+FoxboroPlatform-746526-793,note,Waits at Readville for Train 893
+FoxboroPlatform-746526-793,trip_type,wait
+FoxboroPlatform-746471-1785,note,Waits at Readville for Train 885
+FoxboroPlatform-746471-1785,trip_type,wait
+FoxboroPlatform-746469-1775,note,Waits at Readville for Train 875
+FoxboroPlatform-746469-1775,trip_type,wait
+TempNECV2-756390-856,note,Waits at Readville for Train 1756
+TempNECV2-756390-856,trip_type,wait
+TempNECV2-756397-874,note,Waits at Readville for Train 776
+TempNECV2-756397-874,trip_type,wait
+TempNECV2-756436-984,note,Waits at Readville for Train 784
+TempNECV2-756436-984,trip_type,wait
+TempNECV2-756404-892,note,Waits at Readville for Train 792
+TempNECV2-756404-892,trip_type,wait
+TempNECV2-756408-908,note,Waits at Readville for Train 1708
+TempNECV2-756408-908,trip_type,wait
+TempNECV2-756363-793,note,Waits at Readville for Train 893
+TempNECV2-756363-793,trip_type,wait
+TempNECV2-756295-1775,note,Waits at Readville for Train 875
+TempNECV2-756295-1775,trip_type,wait
+TempNECV2-756302-1785,note,Waits at Readville for Train 885
+TempNECV2-756302-1785,trip_type,wait
+TempNECV2-756018-689,note,Waits at Forest Hills for Train 889
+TempNECV2-756018-689,trip_type,wait
+TempNECV2-756019-693,note,Waits at Forest Hills for Train 893
+TempNECV2-756019-693,trip_type,wait
+HaverhillRestoredWKDY-744334-93,note,Waits at Salem for Train 193
+HaverhillRestoredWKDY-744334-93,trip_type,wait
+HaverhillRestoredWKDY-744251-429,note,Waits at Littleton/Route 495 for Train 1427
+HaverhillRestoredWKDY-744251-429,trip_type,wait
+HaverhillRestoredWKDY-744200-1408,note,Waits at Littleton/Route 495 for Train 406
+HaverhillRestoredWKDY-744200-1408,trip_type,wait
+July14UpdatesWKDY-742921-2002,note,Waits at Braintree for Train 1002
+July14UpdatesWKDY-742921-2002,trip_type,wait
+July14UpdatesWKDY-742975-1047,note,Waits at Braintree for Train 2047
+July14UpdatesWKDY-742975-1047,trip_type,wait
+July14UpdatesWKDY-742924-1991,note,Waits at East Taunton for Train 2041
+July14UpdatesWKDY-742924-1991,trip_type,wait
+July14UpdatesWKDY-742926-1987,note,Waits at East Taunton for Train 2037
+July14UpdatesWKDY-742926-1987,trip_type,wait
+July14UpdatesWKDY-742928-1983,note,Waits at East Taunton for Train 2033
+July14UpdatesWKDY-742928-1983,trip_type,wait
+July14UpdatesWKDY-742934-1971,note,Waits at East Taunton for Train 2021
+July14UpdatesWKDY-742934-1971,trip_type,wait
+July14UpdatesWKDY-742894-2089,note,Waits at East Taunton for Train 1939
+July14UpdatesWKDY-742894-2089,trip_type,wait
+July14UpdatesWKDY-742896-2075,note,Waits at East Taunton for Train 1925
+July14UpdatesWKDY-742896-2075,trip_type,wait
+July14UpdatesWKDY-742897-2069,note,Waits at East Taunton for Train 1919
+July14UpdatesWKDY-742897-2069,trip_type,wait
+July14UpdatesWKDY-742898-2067,note,Waits at East Taunton for Train 1917
+July14UpdatesWKDY-742898-2067,trip_type,wait
+July14UpdatesWKDY-742899-2065,note,Waits at East Taunton for Train 1915
+July14UpdatesWKDY-742899-2065,trip_type,wait
+July14UpdatesWKDY-742901-2061,note,Waits at East Taunton for Train 1911
+July14UpdatesWKDY-742901-2061,trip_type,wait
+July14UpdatesWKDY-742902-2059,note,Waits at East Taunton for Train 1909
+July14UpdatesWKDY-742902-2059,trip_type,wait
+July14UpdatesWKDY-742903-2055,note,Waits at East Taunton for Train 1905
+July14UpdatesWKDY-742903-2055,trip_type,wait
+July14UpdatesWKDY-742938-1942,note,Waits at East Taunton for Train 2092
+July14UpdatesWKDY-742938-1942,trip_type,wait
+July14UpdatesWKDY-742940-1936,note,Waits at East Taunton for Train 2086
+July14UpdatesWKDY-742940-1936,trip_type,wait
+July14UpdatesWKDY-742946-1912,note,Waits at East Taunton for Train 2062
+July14UpdatesWKDY-742946-1912,trip_type,wait
+July14UpdatesWKDY-742905-2044,note,Waits at East Taunton for Train 1994
+July14UpdatesWKDY-742905-2044,trip_type,wait
+July14UpdatesWKDY-742907-2038,note,Waits at East Taunton for Train 1988
+July14UpdatesWKDY-742907-2038,trip_type,wait
+July14UpdatesWKDY-742909-2034,note,Waits at East Taunton for Train 1984
+July14UpdatesWKDY-742909-2034,trip_type,wait
+July14UpdatesWKDY-742911-2030,note,Waits at East Taunton for Train 1980
+July14UpdatesWKDY-742911-2030,trip_type,wait
+July14UpdatesWKDY-742913-2028,note,Waits at East Taunton for Train 1978
+July14UpdatesWKDY-742913-2028,trip_type,wait
+July14UpdatesWKDY-742914-2026,note,Waits at East Taunton for Train 1976
+July14UpdatesWKDY-742914-2026,trip_type,wait
+July14UpdatesWKDY-742915-2024,note,Waits at East Taunton for Train 1974
+July14UpdatesWKDY-742915-2024,trip_type,wait
+July14UpdatesWKDY-742916-2022,note,Waits at East Taunton for Train 1972
+July14UpdatesWKDY-742916-2022,trip_type,wait
+July14UpdatesWKDY-742919-2016,note,Waits at East Taunton for Train 1966
+July14UpdatesWKDY-742919-2016,trip_type,wait
+July14UpdatesWKDY-742920-2010,note,Waits at East Taunton for Train 1960
+July14UpdatesWKDY-742920-2010,trip_type,wait
+July14UpdatesWKDY-742669-565,note,Waits at West Natick for Train 1561
+July14UpdatesWKDY-742669-565,trip_type,wait
+July14UpdatesWKDY-742667-571,note,Waits at West Natick for Train 1567
+July14UpdatesWKDY-742667-571,trip_type,wait
+July14UpdatesWKDY-742671-559,note,Waits at West Natick for Train 1555
+July14UpdatesWKDY-742671-559,trip_type,wait
+July14UpdatesWKDY-742673-553,note,Waits at West Natick for Train 1551
+July14UpdatesWKDY-742673-553,trip_type,wait
+July14UpdatesWKDY-742653-1522,note,Waits at West Natick for Train 518
+July14UpdatesWKDY-742653-1522,trip_type,wait
+July14UpdatesWKDY-742655-1516,note,Waits at West Natick for Train 514
+July14UpdatesWKDY-742655-1516,trip_type,wait
+July14UpdatesWKDY-742656-1512,note,Waits at West Natick for Train 510
+July14UpdatesWKDY-742656-1512,trip_type,wait
+July14UpdatesWKDY-742688-519,note,Waits at Framingham for Train 1517
+July14UpdatesWKDY-742688-519,trip_type,wait
+July14UpdatesWKDY-742847-515,note,Waits at Framingham for Train 1511
+July14UpdatesWKDY-742847-515,trip_type,wait
+July14UpdatesWKDY-742649-1562,note,Waits at Framingham for Train 560
+July14UpdatesWKDY-742649-1562,trip_type,wait
+July14UpdatesWKDY-742650-1558,note,Waits at Framingham for Train 556
+July14UpdatesWKDY-742650-1558,trip_type,wait
+July14UpdatesWKDY-742653-1522,note,Waits at Framingham for Train 520
+July14UpdatesWKDY-742653-1522,trip_type,wait
+July14UpdatesWKND-743112-5806,note,Waits at Readville for Train 5706
+July14UpdatesWKND-743112-5806,trip_type,wait
+July14UpdatesWKND-743127-5878,note,Waits at Readville for Train 5778
+July14UpdatesWKND-743127-5878,trip_type,wait
+July14UpdatesWKND-743128-5884,note,Waits at Readville for Train 5784
+July14UpdatesWKND-743128-5884,trip_type,wait
+July14UpdatesWKND-743130-5892,note,Waits at Readville for Train 5792
+July14UpdatesWKND-743130-5892,trip_type,wait
+July14UpdatesWKND-743115-5824,note,Waits at Readville for Train 5724
+July14UpdatesWKND-743115-5824,trip_type,wait
+July14UpdatesWKND-743116-5830,note,Waits at Readville for Train 5730
+July14UpdatesWKND-743116-5830,trip_type,wait
+July14UpdatesWKND-743118-5838,note,Waits at Readville for Train 5738
+July14UpdatesWKND-743118-5838,trip_type,wait
+July14UpdatesWKND-743120-5846,note,Waits at Readville for Train 5746
+July14UpdatesWKND-743120-5846,trip_type,wait
+July14UpdatesWKND-743123-5856,note,Waits at Readville for Train 5754
+July14UpdatesWKND-743123-5856,trip_type,wait
+July14UpdatesWKND-743125-5868,note,Waits at Readville for Train 5768
+July14UpdatesWKND-743125-5868,trip_type,wait
+July14UpdatesWKND-743366-6047,note,Waits at Braintree for Train 7047
+July14UpdatesWKND-743366-6047,trip_type,wait
+July14UpdatesWKND-743338-6979,note,Waits at East Taunton for Train 7029
+July14UpdatesWKND-743338-6979,trip_type,wait
+July14UpdatesWKND-743278-5715,note,Waits at Readville for Train 5815
+July14UpdatesWKND-743278-5715,trip_type,wait
+July14UpdatesWKND-743294-5785,note,Waits at Readville for Train 5885
+July14UpdatesWKND-743294-5785,trip_type,wait
+July14UpdatesWKND-743296-5793,note,Waits at Readville for Train 5893
+July14UpdatesWKND-743296-5793,trip_type,wait
+July14UpdatesWKND-743279-5721,note,Waits at Readville for Train 5821
+July14UpdatesWKND-743279-5721,trip_type,wait
+July14UpdatesWKND-743282-5731,note,Waits at Readville for Train 5831
+July14UpdatesWKND-743282-5731,trip_type,wait
+July14UpdatesWKND-743284-5739,note,Waits at Readville for Train 5839
+July14UpdatesWKND-743284-5739,trip_type,wait
+July14UpdatesWKND-743286-5747,note,Waits at Readville for Train 5847
+July14UpdatesWKND-743286-5747,trip_type,wait
+July14UpdatesWKND-743288-5755,note,Waits at Readville for Train 5855
+July14UpdatesWKND-743288-5755,trip_type,wait
+July14UpdatesWKND-743289-5767,note,Waits at Readville for Train 5867
+July14UpdatesWKND-743289-5767,trip_type,wait
+July14UpdatesWKND-743291-5777,note,Waits at Readville for Train 5877
+July14UpdatesWKND-743291-5777,trip_type,wait

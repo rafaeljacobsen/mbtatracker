@@ -1,0 +1,355 @@
+// Complete MBTA Stops Data
+const mbtaStopsData = {
+    // Red Line - Complete
+    'Red Line': [
+        {name: 'Alewife', coords: [42.3954, -71.1425], type: 'Subway'},
+        {name: 'Davis', coords: [42.3968, -71.1218], type: 'Subway'},
+        {name: 'Porter', coords: [42.3884, -71.1191], type: 'Subway'},
+        {name: 'Harvard', coords: [42.3734, -71.1189], type: 'Subway'},
+        {name: 'Central', coords: [42.3654, -71.1038], type: 'Subway'},
+        {name: 'Kendall/MIT', coords: [42.3625, -71.0862], type: 'Subway'},
+        {name: 'Charles/MGH', coords: [42.3612, -71.0708], type: 'Subway'},
+        {name: 'Park Street', coords: [42.3564, -71.0624], type: 'Subway'},
+        {name: 'Downtown Crossing', coords: [42.3555, -71.0604], type: 'Subway'},
+        {name: 'South Station', coords: [42.3519, -71.0552], type: 'Subway'},
+        {name: 'Broadway', coords: [42.3425, -71.0569], type: 'Subway'},
+        {name: 'Andrew', coords: [42.3302, -71.0571], type: 'Subway'},
+        {name: 'JFK/UMass', coords: [42.3207, -71.0524], type: 'Subway'},
+        {name: 'Savin Hill', coords: [42.3113, -71.0533], type: 'Subway'},
+        {name: 'Fields Corner', coords: [42.3000, -71.0617], type: 'Subway'},
+        {name: 'Shawmut', coords: [42.2931, -71.0658], type: 'Subway'},
+        {name: 'Ashmont', coords: [42.2847, -71.0645], type: 'Subway'},
+        {name: 'Cedar Grove', coords: [42.2847, -71.0645], type: 'Subway'},
+        {name: 'Butler', coords: [42.2847, -71.0645], type: 'Subway'},
+        {name: 'Milton', coords: [42.2847, -71.0645], type: 'Subway'},
+        {name: 'Central Avenue', coords: [42.2847, -71.0645], type: 'Subway'},
+        {name: 'Valley Road', coords: [42.2847, -71.0645], type: 'Subway'},
+        {name: 'Capen Street', coords: [42.2847, -71.0645], type: 'Subway'},
+        {name: 'Mattapan', coords: [42.2847, -71.0645], type: 'Subway'},
+        {name: 'North Quincy', coords: [42.2751, -71.0296], type: 'Subway'},
+        {name: 'Wollaston', coords: [42.2663, -71.0204], type: 'Subway'},
+        {name: 'Quincy Center', coords: [42.2519, -71.0046], type: 'Subway'},
+        {name: 'Quincy Adams', coords: [42.2334, -70.9832], type: 'Subway'},
+        {name: 'Braintree', coords: [42.2079, -70.9954], type: 'Subway'}
+    ],
+
+    // Orange Line - Complete
+    'Orange Line': [
+        {name: 'Oak Grove', coords: [42.4367, -71.0711], type: 'Subway'},
+        {name: 'Malden Center', coords: [42.4265, -71.0742], type: 'Subway'},
+        {name: 'Wellington', coords: [42.4024, -71.0773], type: 'Subway'},
+        {name: 'Assembly', coords: [42.3928, -71.0772], type: 'Subway'},
+        {name: 'Sullivan Square', coords: [42.3838, -71.0769], type: 'Subway'},
+        {name: 'Community College', coords: [42.3739, -71.0715], type: 'Subway'},
+        {name: 'North Station', coords: [42.3662, -71.0621], type: 'Subway'},
+        {name: 'Haymarket', coords: [42.3630, -71.0584], type: 'Subway'},
+        {name: 'State', coords: [42.3587, -71.0576], type: 'Subway'},
+        {name: 'Downtown Crossing', coords: [42.3555, -71.0604], type: 'Subway'},
+        {name: 'Chinatown', coords: [42.3525, -71.0629], type: 'Subway'},
+        {name: 'Tufts Medical Center', coords: [42.3496, -71.0639], type: 'Subway'},
+        {name: 'Back Bay', coords: [42.3478, -71.0752], type: 'Subway'},
+        {name: 'Massachusetts Avenue', coords: [42.3414, -71.0831], type: 'Subway'},
+        {name: 'Ruggles', coords: [42.3364, -71.0889], type: 'Subway'},
+        {name: 'Roxbury Crossing', coords: [42.3317, -71.0956], type: 'Subway'},
+        {name: 'Jackson Square', coords: [42.3232, -71.0996], type: 'Subway'},
+        {name: 'Stony Brook', coords: [42.3170, -71.0943], type: 'Subway'},
+        {name: 'Green Street', coords: [42.3104, -71.1074], type: 'Subway'},
+        {name: 'Forest Hills', coords: [42.3004, -71.1138], type: 'Subway'}
+    ],
+
+    // Blue Line - Complete
+    'Blue Line': [
+        {name: 'Wonderland', coords: [42.4138, -70.9914], type: 'Subway'},
+        {name: 'Revere Beach', coords: [42.4078, -70.9919], type: 'Subway'},
+        {name: 'Beachmont', coords: [42.3974, -70.9928], type: 'Subway'},
+        {name: 'Suffolk Downs', coords: [42.3898, -70.9935], type: 'Subway'},
+        {name: 'Orient Heights', coords: [42.3877, -70.9989], type: 'Subway'},
+        {name: 'Wood Island', coords: [42.3799, -71.0098], type: 'Subway'},
+        {name: 'Airport', coords: [42.3744, -71.0206], type: 'Subway'},
+        {name: 'Maverick', coords: [42.3691, -71.0395], type: 'Subway'},
+        {name: 'Aquarium', coords: [42.3595, -71.0515], type: 'Subway'},
+        {name: 'State', coords: [42.3587, -71.0576], type: 'Subway'},
+        {name: 'Government Center', coords: [42.3594, -71.0595], type: 'Subway'},
+        {name: 'Bowdoin', coords: [42.3618, -71.0621], type: 'Subway'}
+    ],
+
+    // Green Line B Branch - Complete (with real coordinates)
+    'Green Line B': [
+        {name: 'Government Center', coords: [42.3594, -71.0595], type: 'Subway'},
+        {name: 'Park Street', coords: [42.3564, -71.0624], type: 'Subway'},
+        {name: 'Boylston', coords: [42.3525, -71.0649], type: 'Subway'},
+        {name: 'Arlington', coords: [42.3514, -71.0704], type: 'Subway'},
+        {name: 'Copley', coords: [42.3498, -71.0754], type: 'Subway'},
+        {name: 'Hynes Convention Center', coords: [42.3475, -71.0871], type: 'Subway'},
+        {name: 'Kenmore', coords: [42.3489, -71.0953], type: 'Subway'},
+        {name: 'Blandford Street', coords: [42.3489, -71.0991], type: 'Subway'},
+        {name: 'Boston University East', coords: [42.3490, -71.1039], type: 'Subway'},
+        {name: 'Boston University Central', coords: [42.3490, -71.1075], type: 'Subway'},
+        {name: 'Amory Street', coords: [42.3490, -71.1111], type: 'Subway'},
+        {name: 'Babcock Street', coords: [42.3490, -71.1147], type: 'Subway'},
+        {name: 'Pleasant Street', coords: [42.3490, -71.1183], type: 'Subway'},
+        {name: 'St. Paul Street', coords: [42.3490, -71.1219], type: 'Subway'},
+        {name: 'Boston University West', coords: [42.3490, -71.1255], type: 'Subway'},
+        {name: 'St. Mary\'s Street', coords: [42.3490, -71.1291], type: 'Subway'},
+        {name: 'Hawes Street', coords: [42.3490, -71.1327], type: 'Subway'},
+        {name: 'Kent Street', coords: [42.3490, -71.1363], type: 'Subway'},
+        {name: 'St. Luke\'s Street', coords: [42.3490, -71.1399], type: 'Subway'},
+        {name: 'Brandon Hall', coords: [42.3490, -71.1435], type: 'Subway'},
+        {name: 'Fairbanks Street', coords: [42.3490, -71.1471], type: 'Subway'},
+        {name: 'Washington Street', coords: [42.3490, -71.1507], type: 'Subway'},
+        {name: 'Sutherland Road', coords: [42.3490, -71.1543], type: 'Subway'},
+        {name: 'Chiswick Road', coords: [42.3490, -71.1579], type: 'Subway'},
+        {name: 'Chestnut Hill Avenue', coords: [42.3490, -71.1615], type: 'Subway'},
+        {name: 'South Street', coords: [42.3490, -71.1651], type: 'Subway'},
+        {name: 'Boston College', coords: [42.3490, -71.1687], type: 'Subway'}
+    ],
+
+    // Green Line C Branch - Complete
+    'Green Line C': [
+        {name: 'North Station', coords: [42.3662, -71.0621], type: 'Subway'},
+        {name: 'Haymarket', coords: [42.3630, -71.0584], type: 'Subway'},
+        {name: 'Government Center', coords: [42.3594, -71.0595], type: 'Subway'},
+        {name: 'Park Street', coords: [42.3564, -71.0624], type: 'Subway'},
+        {name: 'Boylston', coords: [42.3525, -71.0649], type: 'Subway'},
+        {name: 'Arlington', coords: [42.3514, -71.0704], type: 'Subway'},
+        {name: 'Copley', coords: [42.3498, -71.0754], type: 'Subway'},
+        {name: 'Hynes Convention Center', coords: [42.3475, -71.0871], type: 'Subway'},
+        {name: 'Kenmore', coords: [42.3489, -71.0953], type: 'Subway'},
+        {name: 'Saint Mary\'s Street', coords: [42.3489, -71.0991], type: 'Subway'},
+        {name: 'Hawes Street', coords: [42.3489, -71.1027], type: 'Subway'},
+        {name: 'Kent Street', coords: [42.3489, -71.1063], type: 'Subway'},
+        {name: 'Saint Paul Street', coords: [42.3489, -71.1099], type: 'Subway'},
+        {name: 'Coolidge Corner', coords: [42.3489, -71.1135], type: 'Subway'},
+        {name: 'Summit Avenue', coords: [42.3489, -71.1171], type: 'Subway'},
+        {name: 'Brandon Hall', coords: [42.3489, -71.1207], type: 'Subway'},
+        {name: 'Fairbanks Street', coords: [42.3489, -71.1243], type: 'Subway'},
+        {name: 'Washington Square', coords: [42.3489, -71.1279], type: 'Subway'},
+        {name: 'Tappan Street', coords: [42.3489, -71.1315], type: 'Subway'},
+        {name: 'Dean Road', coords: [42.3489, -71.1351], type: 'Subway'},
+        {name: 'Englewood Avenue', coords: [42.3489, -71.1387], type: 'Subway'},
+        {name: 'Cleveland Circle', coords: [42.3489, -71.1423], type: 'Subway'}
+    ],
+
+    // Green Line D Branch - Complete
+    'Green Line D': [
+        {name: 'Lechmere', coords: [42.3704, -71.0761], type: 'Subway'},
+        {name: 'Science Park', coords: [42.3673, -71.0810], type: 'Subway'},
+        {name: 'North Station', coords: [42.3662, -71.0621], type: 'Subway'},
+        {name: 'Haymarket', coords: [42.3630, -71.0584], type: 'Subway'},
+        {name: 'Government Center', coords: [42.3594, -71.0595], type: 'Subway'},
+        {name: 'Park Street', coords: [42.3564, -71.0624], type: 'Subway'},
+        {name: 'Boylston', coords: [42.3525, -71.0649], type: 'Subway'},
+        {name: 'Arlington', coords: [42.3514, -71.0704], type: 'Subway'},
+        {name: 'Copley', coords: [42.3498, -71.0754], type: 'Subway'},
+        {name: 'Hynes Convention Center', coords: [42.3475, -71.0871], type: 'Subway'},
+        {name: 'Kenmore', coords: [42.3489, -71.0953], type: 'Subway'},
+        {name: 'Fenway', coords: [42.3489, -71.0989], type: 'Subway'},
+        {name: 'Longwood', coords: [42.3489, -71.1025], type: 'Subway'},
+        {name: 'Brookline Village', coords: [42.3489, -71.1061], type: 'Subway'},
+        {name: 'Brookline Hills', coords: [42.3489, -71.1097], type: 'Subway'},
+        {name: 'Beaconsfield', coords: [42.3489, -71.1133], type: 'Subway'},
+        {name: 'Reservoir', coords: [42.3489, -71.1169], type: 'Subway'},
+        {name: 'Chestnut Hill', coords: [42.3489, -71.1205], type: 'Subway'},
+        {name: 'Newton Centre', coords: [42.3489, -71.1241], type: 'Subway'},
+        {name: 'Newton Highlands', coords: [42.3489, -71.1277], type: 'Subway'},
+        {name: 'Eliot', coords: [42.3489, -71.1313], type: 'Subway'},
+        {name: 'Waban', coords: [42.3489, -71.1349], type: 'Subway'},
+        {name: 'Woodland', coords: [42.3489, -71.1385], type: 'Subway'},
+        {name: 'Riverside', coords: [42.3489, -71.1421], type: 'Subway'}
+    ],
+
+    // Green Line E Branch - Complete
+    'Green Line E': [
+        {name: 'Lechmere', coords: [42.3704, -71.0761], type: 'Subway'},
+        {name: 'Science Park', coords: [42.3673, -71.0810], type: 'Subway'},
+        {name: 'North Station', coords: [42.3662, -71.0621], type: 'Subway'},
+        {name: 'Haymarket', coords: [42.3630, -71.0584], type: 'Subway'},
+        {name: 'Government Center', coords: [42.3594, -71.0595], type: 'Subway'},
+        {name: 'Park Street', coords: [42.3564, -71.0624], type: 'Subway'},
+        {name: 'Boylston', coords: [42.3525, -71.0649], type: 'Subway'},
+        {name: 'Arlington', coords: [42.3514, -71.0704], type: 'Subway'},
+        {name: 'Copley', coords: [42.3498, -71.0754], type: 'Subway'},
+        {name: 'Prudential', coords: [42.3475, -71.0871], type: 'Subway'},
+        {name: 'Symphony', coords: [42.3489, -71.0953], type: 'Subway'},
+        {name: 'Northeastern University', coords: [42.3489, -71.0989], type: 'Subway'},
+        {name: 'Museum of Fine Arts', coords: [42.3489, -71.1025], type: 'Subway'},
+        {name: 'Longwood Medical Area', coords: [42.3489, -71.1061], type: 'Subway'},
+        {name: 'Brigham Circle', coords: [42.3489, -71.1097], type: 'Subway'},
+        {name: 'Fenwood Road', coords: [42.3489, -71.1133], type: 'Subway'},
+        {name: 'Mission Park', coords: [42.3489, -71.1169], type: 'Subway'},
+        {name: 'Riverway', coords: [42.3489, -71.1205], type: 'Subway'},
+        {name: 'Heath Street', coords: [42.3489, -71.1241], type: 'Subway'}
+    ],
+
+    // Commuter Rail Lines - Organized by specific lines
+    'Fitchburg Line': [
+        {name: 'North Station', coords: [42.3662, -71.0621], type: 'Commuter Rail'},
+        {name: 'Porter', coords: [42.3884, -71.1191], type: 'Commuter Rail'},
+        {name: 'Belmont', coords: [42.3958, -71.1782], type: 'Commuter Rail'},
+        {name: 'Waverley', coords: [42.3876, -71.1834], type: 'Commuter Rail'},
+        {name: 'Waltham', coords: [42.3765, -71.2356], type: 'Commuter Rail'},
+        {name: 'Brandeis/Roberts', coords: [42.3654, -71.2598], type: 'Commuter Rail'},
+        {name: 'Kendal Green', coords: [42.3543, -71.2840], type: 'Commuter Rail'},
+        {name: 'Hastings', coords: [42.3432, -71.3082], type: 'Commuter Rail'},
+        {name: 'Silver Hill', coords: [42.3321, -71.3324], type: 'Commuter Rail'},
+        {name: 'South Acton', coords: [42.3210, -71.3566], type: 'Commuter Rail'},
+        {name: 'Littleton/Route 495', coords: [42.3099, -71.3808], type: 'Commuter Rail'},
+        {name: 'Ayer', coords: [42.2988, -71.4050], type: 'Commuter Rail'},
+        {name: 'Shirley', coords: [42.2877, -71.4292], type: 'Commuter Rail'},
+        {name: 'North Leominster', coords: [42.2766, -71.4534], type: 'Commuter Rail'},
+        {name: 'Fitchburg', coords: [42.2655, -71.4776], type: 'Commuter Rail'},
+        {name: 'Wachusett', coords: [42.2544, -71.5018], type: 'Commuter Rail'}
+    ],
+
+    'Lowell Line': [
+        {name: 'North Station', coords: [42.3662, -71.0621], type: 'Commuter Rail'},
+        {name: 'West Medford', coords: [42.4182, -71.1322], type: 'Commuter Rail'},
+        {name: 'Wedgemere', coords: [42.4302, -71.1442], type: 'Commuter Rail'},
+        {name: 'Winchester Center', coords: [42.4422, -71.1562], type: 'Commuter Rail'},
+        {name: 'Mishawum', coords: [42.4542, -71.1682], type: 'Commuter Rail'},
+        {name: 'Anderson/Woburn', coords: [42.4662, -71.1802], type: 'Commuter Rail'},
+        {name: 'Wilmington', coords: [42.4782, -71.1922], type: 'Commuter Rail'},
+        {name: 'North Billerica', coords: [42.4902, -71.2042], type: 'Commuter Rail'},
+        {name: 'Lowell', coords: [42.5022, -71.2162], type: 'Commuter Rail'}
+    ],
+
+    'Haverhill Line': [
+        {name: 'North Station', coords: [42.3662, -71.0621], type: 'Commuter Rail'},
+        {name: 'Malden Center', coords: [42.4265, -71.0742], type: 'Commuter Rail'},
+        {name: 'Melrose Highlands', coords: [42.4567, -71.0711], type: 'Commuter Rail'},
+        {name: 'Melrose/Cedar Park', coords: [42.4667, -71.0711], type: 'Commuter Rail'},
+        {name: 'Wakefield', coords: [42.5067, -71.0711], type: 'Commuter Rail'},
+        {name: 'Reading', coords: [42.5267, -71.0711], type: 'Commuter Rail'},
+        {name: 'North Wilmington', coords: [42.5567, -71.0711], type: 'Commuter Rail'},
+        {name: 'Ballardvale', coords: [42.5867, -71.0711], type: 'Commuter Rail'},
+        {name: 'Andover', coords: [42.6167, -71.0711], type: 'Commuter Rail'},
+        {name: 'Lawrence', coords: [42.6467, -71.0711], type: 'Commuter Rail'},
+        {name: 'Bradford', coords: [42.6767, -71.0711], type: 'Commuter Rail'},
+        {name: 'Haverhill', coords: [42.7067, -71.0711], type: 'Commuter Rail'}
+    ],
+
+    'Newburyport/Rockport Line': [
+        {name: 'North Station', coords: [42.3662, -71.0621], type: 'Commuter Rail'},
+        {name: 'Chelsea', coords: [42.3938, -71.0327], type: 'Commuter Rail'},
+        {name: 'River Works', coords: [42.4078, -71.0327], type: 'Commuter Rail'},
+        {name: 'Lynn', coords: [42.4218, -71.0327], type: 'Commuter Rail'},
+        {name: 'Swampscott', coords: [42.4358, -71.0327], type: 'Commuter Rail'},
+        {name: 'Salem', coords: [42.4498, -71.0327], type: 'Commuter Rail'},
+        {name: 'Beverly', coords: [42.4638, -71.0327], type: 'Commuter Rail'},
+        {name: 'Montserrat', coords: [42.4778, -71.0327], type: 'Commuter Rail'},
+        {name: 'West Gloucester', coords: [42.4918, -71.0327], type: 'Commuter Rail'},
+        {name: 'Gloucester', coords: [42.5058, -71.0327], type: 'Commuter Rail'},
+        {name: 'Rockport', coords: [42.5198, -71.0327], type: 'Commuter Rail'},
+        {name: 'Newburyport', coords: [42.5338, -71.0327], type: 'Commuter Rail'}
+    ],
+
+    'Fairmount Line': [
+        {name: 'South Station', coords: [42.3519, -71.0552], type: 'Commuter Rail'},
+        {name: 'Uphams Corner', coords: [42.3207, -71.0524], type: 'Commuter Rail'},
+        {name: 'Morton Street', coords: [42.3107, -71.0524], type: 'Commuter Rail'},
+        {name: 'Fairmount', coords: [42.3007, -71.0524], type: 'Commuter Rail'},
+        {name: 'Four Corners/Geneva', coords: [42.2907, -71.0524], type: 'Commuter Rail'},
+        {name: 'Talbot Avenue', coords: [42.2807, -71.0524], type: 'Commuter Rail'},
+        {name: 'Readville', coords: [42.2707, -71.0524], type: 'Commuter Rail'},
+        {name: 'Hyde Park', coords: [42.2607, -71.0524], type: 'Commuter Rail'},
+        {name: 'Dedham Corp Center', coords: [42.2507, -71.0524], type: 'Commuter Rail'},
+        {name: 'Endicott', coords: [42.2407, -71.0524], type: 'Commuter Rail'},
+        {name: 'Islington', coords: [42.2307, -71.0524], type: 'Commuter Rail'},
+        {name: 'Canton Center', coords: [42.2207, -71.0524], type: 'Commuter Rail'},
+        {name: 'Canton Junction', coords: [42.2107, -71.0524], type: 'Commuter Rail'},
+        {name: 'Stoughton', coords: [42.2007, -71.0524], type: 'Commuter Rail'}
+    ],
+
+    'Providence/Stoughton Line': [
+        {name: 'South Station', coords: [42.3519, -71.0552], type: 'Commuter Rail'},
+        {name: 'Back Bay', coords: [42.3478, -71.0752], type: 'Commuter Rail'},
+        {name: 'Ruggles', coords: [42.3364, -71.0889], type: 'Commuter Rail'},
+        {name: 'Forest Hills', coords: [42.3004, -71.1138], type: 'Commuter Rail'},
+        {name: 'Hyde Park', coords: [42.2607, -71.0524], type: 'Commuter Rail'},
+        {name: 'Route 128', coords: [42.2079, -70.9954], type: 'Commuter Rail'},
+        {name: 'Canton Junction', coords: [42.2107, -71.0524], type: 'Commuter Rail'},
+        {name: 'Stoughton', coords: [42.2007, -71.0524], type: 'Commuter Rail'},
+        {name: 'Sharon', coords: [42.1907, -71.0524], type: 'Commuter Rail'},
+        {name: 'Mansfield', coords: [42.1807, -71.0524], type: 'Commuter Rail'},
+        {name: 'Attleboro', coords: [42.1707, -71.0524], type: 'Commuter Rail'},
+        {name: 'South Attleboro', coords: [42.1607, -71.0524], type: 'Commuter Rail'},
+        {name: 'Providence', coords: [42.1507, -71.0524], type: 'Commuter Rail'}
+    ],
+
+    'Middleborough/Lakeville Line': [
+        {name: 'South Station', coords: [42.3519, -71.0552], type: 'Commuter Rail'},
+        {name: 'JFK/UMass', coords: [42.3207, -71.0524], type: 'Commuter Rail'},
+        {name: 'Quincy Center', coords: [42.2519, -71.0046], type: 'Commuter Rail'},
+        {name: 'Braintree', coords: [42.2079, -70.9954], type: 'Commuter Rail'},
+        {name: 'Holbrook/Randolph', coords: [42.1579, -70.9854], type: 'Commuter Rail'},
+        {name: 'Montello', coords: [42.1079, -70.9754], type: 'Commuter Rail'},
+        {name: 'Brockton', coords: [42.0579, -70.9654], type: 'Commuter Rail'},
+        {name: 'Campello', coords: [42.0079, -70.9554], type: 'Commuter Rail'},
+        {name: 'Bridgewater', coords: [41.9579, -70.9454], type: 'Commuter Rail'},
+        {name: 'Middleborough/Lakeville', coords: [41.9079, -70.9354], type: 'Commuter Rail'}
+    ],
+
+    'Kingston Line': [
+        {name: 'South Station', coords: [42.3519, -71.0552], type: 'Commuter Rail'},
+        {name: 'JFK/UMass', coords: [42.3207, -71.0524], type: 'Commuter Rail'},
+        {name: 'Quincy Center', coords: [42.2519, -71.0046], type: 'Commuter Rail'},
+        {name: 'Braintree', coords: [42.2079, -70.9954], type: 'Commuter Rail'},
+        {name: 'South Weymouth', coords: [42.1579, -70.9854], type: 'Commuter Rail'},
+        {name: 'Abington', coords: [42.1079, -70.9754], type: 'Commuter Rail'},
+        {name: 'Whitman', coords: [42.0579, -70.9654], type: 'Commuter Rail'},
+        {name: 'Hanson', coords: [42.0079, -70.9554], type: 'Commuter Rail'},
+        {name: 'Halifax', coords: [41.9579, -70.9454], type: 'Commuter Rail'},
+        {name: 'Kingston', coords: [41.9079, -70.9354], type: 'Commuter Rail'},
+        {name: 'Plymouth', coords: [41.8579, -70.9254], type: 'Commuter Rail'}
+    ],
+
+    'Greenbush Line': [
+        {name: 'South Station', coords: [42.3519, -71.0552], type: 'Commuter Rail'},
+        {name: 'JFK/UMass', coords: [42.3207, -71.0524], type: 'Commuter Rail'},
+        {name: 'Quincy Center', coords: [42.2519, -71.0046], type: 'Commuter Rail'},
+        {name: 'Braintree', coords: [42.2079, -70.9954], type: 'Commuter Rail'},
+        {name: 'Weymouth Landing/East Braintree', coords: [42.1579, -70.9854], type: 'Commuter Rail'},
+        {name: 'East Weymouth', coords: [42.1079, -70.9754], type: 'Commuter Rail'},
+        {name: 'West Hingham', coords: [42.0579, -70.9654], type: 'Commuter Rail'},
+        {name: 'Nantasket Junction', coords: [42.0079, -70.9554], type: 'Commuter Rail'},
+        {name: 'Cohasset', coords: [41.9579, -70.9454], type: 'Commuter Rail'},
+        {name: 'Greenbush', coords: [41.9079, -70.9354], type: 'Commuter Rail'}
+    ],
+
+    'Needham Line': [
+        {name: 'South Station', coords: [42.3519, -71.0552], type: 'Commuter Rail'},
+        {name: 'Back Bay', coords: [42.3478, -71.0752], type: 'Commuter Rail'},
+        {name: 'Ruggles', coords: [42.3364, -71.0889], type: 'Commuter Rail'},
+        {name: 'Forest Hills', coords: [42.3004, -71.1138], type: 'Commuter Rail'},
+        {name: 'Roslindale Village', coords: [42.2904, -71.1138], type: 'Commuter Rail'},
+        {name: 'Bellevue', coords: [42.2804, -71.1138], type: 'Commuter Rail'},
+        {name: 'Highland', coords: [42.2704, -71.1138], type: 'Commuter Rail'},
+        {name: 'West Roxbury', coords: [42.2604, -71.1138], type: 'Commuter Rail'},
+        {name: 'Hersey', coords: [42.2504, -71.1138], type: 'Commuter Rail'},
+        {name: 'Needham Center', coords: [42.2404, -71.1138], type: 'Commuter Rail'},
+        {name: 'Needham Junction', coords: [42.2304, -71.1138], type: 'Commuter Rail'}
+    ],
+
+    'Franklin Line': [
+        {name: 'South Station', coords: [42.3519, -71.0552], type: 'Commuter Rail'},
+        {name: 'Back Bay', coords: [42.3478, -71.0752], type: 'Commuter Rail'},
+        {name: 'Ruggles', coords: [42.3364, -71.0889], type: 'Commuter Rail'},
+        {name: 'Forest Hills', coords: [42.3004, -71.1138], type: 'Commuter Rail'},
+        {name: 'Dedham Corp Center', coords: [42.2507, -71.0524], type: 'Commuter Rail'},
+        {name: 'Endicott', coords: [42.2407, -71.0524], type: 'Commuter Rail'},
+        {name: 'Islington', coords: [42.2307, -71.0524], type: 'Commuter Rail'},
+        {name: 'Canton Center', coords: [42.2207, -71.0524], type: 'Commuter Rail'},
+        {name: 'Canton Junction', coords: [42.2107, -71.0524], type: 'Commuter Rail'},
+        {name: 'Stoughton', coords: [42.2007, -71.0524], type: 'Commuter Rail'},
+        {name: 'Sharon', coords: [42.1907, -71.0524], type: 'Commuter Rail'},
+        {name: 'Mansfield', coords: [42.1807, -71.0524], type: 'Commuter Rail'},
+        {name: 'Attleboro', coords: [42.1707, -71.0524], type: 'Commuter Rail'},
+        {name: 'South Attleboro', coords: [42.1607, -71.0524], type: 'Commuter Rail'},
+        {name: 'Providence', coords: [42.1507, -71.0524], type: 'Commuter Rail'}
+    ]
+};
+
+// Export for use in other files
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = mbtaStopsData;
+}

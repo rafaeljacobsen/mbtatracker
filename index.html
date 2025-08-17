@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTA Tracker - OpenStreetMap Test</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+        
+        .info-panel {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            z-index: 1000;
+            max-width: 350px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .info-panel h3 {
+            margin: 0 0 15px 0;
+            color: #333;
+            font-size: 18px;
+        }
+        
+        .info-panel p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+        
+        .coordinates {
+            font-family: monospace;
+            background: #f5f5f5;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 8px 0;
+            font-size: 12px;
+        }
+        
+        .filter-controls {
+            margin: 15px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        
+        .filter-controls h4 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .filter-checkbox {
+            margin: 5px 0;
+            font-size: 13px;
+        }
+        
+        .filter-checkbox input {
+            margin-right: 8px;
+        }
+        
+        .stats {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            z-index: 1000;
+            max-width: 200px;
+        }
+        
+        .legend h4 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            font-size: 12px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 8px;
+            border: 2px solid #333;
+        }
+        
+        .search-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            z-index: 1000;
+            width: 250px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .search-results {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        
+        .search-result {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        
+        .search-result:hover {
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    
+    <div class="info-panel">
+        <h3>MBTA Tracker</h3>
+        
+        <div class="filter-controls">
+            <h4>Show/Hide Lines:</h4>
+            <div id="filter-checkboxes">
+                <!-- Dynamic filter checkboxes will be generated here -->
+            </div>
+        </div>
+        
+        <div class="stats">
+            <strong>Total Stops:</strong> <span id="total-stops">0</span><br>
+            <strong>Visible Stops:</strong> <span id="visible-stops">0</span>
+        </div>
+    </div>
+    
+
+    
+    <div class="legend">
+        <h4>Legend</h4>
+        <div id="legend-items">
+            <!-- Dynamic legend items will be generated here -->
+        </div>
+    </div>
+
+    <!-- Include the MBTA stops data -->
+    <script src="mbta-stops-accurate.js"></script>
+
+    <script>
+        // Global variables - declare these first
+        const trainMarkers = new Map();
+        const amtrakMarkers = new Map();
+        let trackingInterval;
+        let amtrakTrackingInterval;
+        let lastUpdateTime = 0;
+        let lastAmtrakUpdateTime = 0;
+        
+        // Check if data loaded properly
+        console.log('Checking if mbtaStopsData is available:', typeof mbtaStopsData);
+        if (typeof mbtaStopsData === 'undefined') {
+            console.error('mbtaStopsData is not defined! Data file may not have loaded properly.');
+            console.error('This could be due to:');
+            console.error('1. JavaScript syntax error in mbta-stops-accurate.js');
+            console.error('2. File not found or not accessible');
+            console.error('3. Network/server issue');
+            document.getElementById('status').textContent = 'Error: MBTA data not loaded - Check browser console for details';
+            document.getElementById('status').style.color = 'red';
+        } else {
+            console.log('MBTA data loaded successfully. Lines found:', Object.keys(mbtaStopsData));
+            console.log('Total routes:', Object.keys(mbtaStopsData).length);
+            console.log('Sample route data:', Object.keys(mbtaStopsData)[0], mbtaStopsData[Object.keys(mbtaStopsData)[0]]);
+        }
+        
+        // Initialize the map centered on Boston
+        const map = L.map('map').setView([42.3601, -71.0589], 11);
+        
+        // Add OpenStreetMap tiles
+        const osmTiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 19
+        });
+        
+        osmTiles.addTo(map);
+        
+        // Create layer groups for each transit line
+        const layers = {};
+        
+        // Initialize layers for all lines
+        if (typeof mbtaStopsData !== 'undefined') {
+            Object.keys(mbtaStopsData).forEach(lineName => {
+                layers[lineName] = L.layerGroup();
+                map.addLayer(layers[lineName]);
+            });
+        } else {
+            console.error('Cannot initialize layers: mbtaStopsData is undefined');
+        }
+        
+
+        
+        // Generate filter checkboxes dynamically
+        const filterContainer = document.getElementById('filter-checkboxes');
+        if (typeof mbtaStopsData !== 'undefined') {
+            Object.keys(mbtaStopsData).forEach(lineName => {
+            const checkboxDiv = document.createElement('div');
+            checkboxDiv.className = 'filter-checkbox';
+            
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = lineName.replace(/\s+/g, '-').toLowerCase();
+            checkbox.checked = true;
+            
+            const label = document.createElement('label');
+            label.htmlFor = checkbox.id;
+            label.textContent = lineName;
+            
+            checkboxDiv.appendChild(checkbox);
+            checkboxDiv.appendChild(label);
+            filterContainer.appendChild(checkboxDiv);
+            
+            // Add event listener
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    map.addLayer(layers[lineName]);
+                } else {
+                    map.removeLayer(layers[lineName]);
+                }
+                updateStats();
+            });
+            });
+        } else {
+            console.error('Cannot generate filters: mbtaStopsData is undefined');
+        }
+        
+        // Color scheme for different lines
+        const lineColors = {
+            'Red Line': '#DA291C',
+            'Orange Line': '#ED8B00',
+            'Blue Line': '#003DA5',
+            'Green Line B': '#00843D',
+            'Green Line C': '#00843D',
+            'Green Line D': '#00843D',
+            'Green Line E': '#00843D',
+            'Mattapan Trolley': '#DA291C',
+            'Fairmount Line': '#800080',
+            'Fall River/New Bedford Line': '#800080',
+            'Fitchburg Line': '#800080',
+            'Foxboro Event Service': '#800080',
+            'Framingham/Worcester Line': '#800080',
+            'Franklin/Foxboro Line': '#800080',
+            'Greenbush Line': '#800080',
+            'Haverhill Line': '#800080',
+            'Kingston Line': '#800080',
+            'Lowell Line': '#800080',
+            'Needham Line': '#800080',
+            'Newburyport/Rockport Line': '#800080',
+            'Providence/Stoughton Line': '#800080'
+        };
+        
+        // Generate legend with one entry per color
+        const legendContainer = document.getElementById('legend-items');
+        if (typeof mbtaStopsData !== 'undefined') {
+            const colorMap = new Map();
+            
+            // Group routes by color
+            Object.keys(mbtaStopsData).forEach(lineName => {
+                const color = lineColors[lineName] || '#666';
+                if (!colorMap.has(color)) {
+                    colorMap.set(color, []);
+                }
+                colorMap.get(color).push(lineName);
+            });
+            
+            // Create legend entries
+            colorMap.forEach((routes, color) => {
+                const legendDiv = document.createElement('div');
+                legendDiv.className = 'legend-item';
+                
+                const colorDiv = document.createElement('div');
+                colorDiv.className = 'legend-color';
+                colorDiv.style.background = color;
+                
+                const span = document.createElement('span');
+                
+                // Simplify labels for commuter rail and green line
+                if (color === '#800080') {
+                    span.textContent = 'Commuter Rail';
+                } else if (color === '#008000') {
+                    span.textContent = 'Green Line';
+                } else {
+                    span.textContent = routes.join(', ');
+                }
+                
+                legendDiv.appendChild(colorDiv);
+                legendDiv.appendChild(span);
+                legendContainer.appendChild(legendDiv);
+            });
+        } else {
+            console.error('Cannot generate legend: mbtaStopsData is undefined');
+        }
+        
+                    // Create markers and tracks for all routes
+            const markers = [];
+            const stopMarkers = new Map(); // Track markers by stopId for multi-line stops
+            
+            if (typeof mbtaStopsData !== 'undefined' && typeof routeShapes !== 'undefined') {
+                console.log('Starting optimized rendering...');
+                console.log('Number of routes with shapes:', Object.keys(routeShapes).length);
+                
+                let totalTracksDrawn = 0;
+                let totalStopsDrawn = 0;
+                
+                // Batch processing for better performance
+                const processRoute = (lineName, stops, color) => {
+                    const routeMarkers = [];
+                    const routeTracks = [];
+                    
+                    // Process track shapes
+                    if (routeShapes[lineName] && routeShapes[lineName].length > 0) {
+                        routeShapes[lineName].forEach((shape, shapeIndex) => {
+                            if (shape.coords && shape.coords.length > 1) {
+                                // Optimized duplicate coordinate removal
+                                const cleanCoords = [];
+                                let prevLat = null, prevLon = null;
+                                
+                                for (let i = 0; i < shape.coords.length; i++) {
+                                    const coord = shape.coords[i];
+                                    if (prevLat !== coord[0] || prevLon !== coord[1]) {
+                                        cleanCoords.push(coord);
+                                        prevLat = coord[0];
+                                        prevLon = coord[1];
+                                    }
+                                }
+                                
+                                if (cleanCoords.length > 1) {
+                                    const trackLine = L.polyline(cleanCoords, {
+                                        color: color,
+                                        weight: 3,
+                                        opacity: 0.7
+                                    });
+                                    
+                                    trackLine.bindPopup(`<b>${lineName}</b> Shape ${shapeIndex + 1} Track`);
+                                    routeTracks.push(trackLine);
+                                    totalTracksDrawn++;
+                                }
+                            }
+                        });
+                    }
+                    
+                    // Process stop markers
+                    stops.forEach(stop => {
+                        const stopRoutes = stopToRoutes[stop.stopId] || [];
+                        const isMultiLine = stopRoutes.length > 1;
+                        
+                        if (isMultiLine && stopMarkers.has(stop.stopId)) {
+                            const existingMarker = stopMarkers.get(stop.stopId);
+                            existingMarker.options.colors = existingMarker.options.colors || [];
+                            existingMarker.options.colors.push(color);
+                            
+                            const allLines = stopRoutes.join(', ');
+                            existingMarker.bindPopup(`
+                                <b>${stop.name}</b><br>
+                                Type: ${stop.type}<br>
+                                Lines: ${allLines}<br>
+                                Coordinates: ${stop.coords[0].toFixed(6)}, ${stop.coords[1].toFixed(6)}
+                            `);
+                        } else {
+                            const marker = L.circleMarker(stop.coords, {
+                                radius: isMultiLine ? 8 : 6,
+                                fillColor: color,
+                                color: '#fff',
+                                weight: 2,
+                                opacity: 1,
+                                fillOpacity: 0.8,
+                                colors: isMultiLine ? [color] : undefined
+                            });
+                            
+                            const popupText = isMultiLine ? 
+                                `<b>${stop.name}</b><br>Type: ${stop.type}<br>Lines: ${stopRoutes.join(', ')}<br>Coordinates: ${stop.coords[0].toFixed(6)}, ${stop.coords[1].toFixed(6)}` :
+                                `<b>${stop.name}</b><br>Type: ${stop.type}<br>Line: ${lineName}<br>Coordinates: ${stop.coords[0].toFixed(6)}, ${stop.coords[1].toFixed(6)}`;
+                            
+                            marker.bindPopup(popupText);
+                            routeMarkers.push(marker);
+                            totalStopsDrawn++;
+                            
+                            if (isMultiLine) {
+                                stopMarkers.set(stop.stopId, marker);
+                            }
+                        }
+                    });
+                    
+                    return { markers: routeMarkers, tracks: routeTracks };
+                };
+                
+                // Process routes in chunks to prevent UI freezing
+                const routes = Object.entries(mbtaStopsData);
+                const chunkSize = 5; // Process 5 routes at a time
+                
+                const processChunk = (startIndex) => {
+                    const endIndex = Math.min(startIndex + chunkSize, routes.length);
+                    const chunk = routes.slice(startIndex, endIndex);
+                    
+                    chunk.forEach(([lineName, stops]) => {
+                        const color = lineColors[lineName] || '#666';
+                        const result = processRoute(lineName, stops, color);
+                        
+                        // Batch add markers and tracks to layers
+                        result.markers.forEach(marker => {
+                            markers.push(marker);
+                            layers[lineName].addLayer(marker);
+                        });
+                        
+                        result.tracks.forEach(track => {
+                            markers.push(track);
+                            layers[lineName].addLayer(track);
+                        });
+                    });
+                    
+                    // Process next chunk if there are more routes
+                    if (endIndex < routes.length) {
+                        setTimeout(() => processChunk(endIndex), 10); // 10ms delay between chunks
+                    } else {
+                        console.log(`Rendering complete: ${totalTracksDrawn} tracks, ${totalStopsDrawn} stops`);
+                    }
+                };
+                
+                // Start processing
+                processChunk(0);
+                
+            } else {
+                console.error('Cannot create markers: mbtaStopsData or routeShapes is undefined');
+            }
+        
+        // Update stats display
+        function updateStats() {
+            // Update stats
+            let totalStops = 0;
+            if (typeof mbtaStopsData !== 'undefined') {
+                Object.values(mbtaStopsData).forEach(stops => {
+                    totalStops += stops.length;
+                });
+            }
+            document.getElementById('total-stops').textContent = totalStops;
+            
+            let visibleCount = 0;
+            Object.values(layers).forEach(layer => {
+                if (map.hasLayer(layer)) {
+                    visibleCount += layer.getLayers().length;
+                }
+            });
+            document.getElementById('visible-stops').textContent = visibleCount;
+        }
+        
+
+        
+
+        
+        // Filter controls are now generated dynamically above
+        
+
+        
+        // Initialize stats
+        updateStats();
+        
+        // Add some basic controls
+        const zoomControl = L.control.zoom({
+            position: 'bottomright'
+        }).addTo(map);
+        
+        // Add scale control
+        const scaleControl = L.control.scale({
+            position: 'bottomleft'
+        }).addTo(map);
+        
+        console.log('MBTA Tracker OSM test map loaded successfully!');
+        if (typeof mbtaStopsData !== 'undefined') {
+            console.log('Total stops loaded:', Object.values(mbtaStopsData).reduce((sum, stops) => sum + stops.length, 0));
+        } else {
+            console.log('Total stops loaded: 0 (data not available)');
+        }
+        console.log('Map center:', map.getCenter());
+        console.log('Map zoom:', map.getZoom());
+        
+
+        
+        // Live MBTA Train Tracking
+        
+
+        
+        // Function to fetch live train positions
+        async function fetchLiveTrains() {
+            try {
+                const now = Date.now();
+                if (now - lastUpdateTime < 15000) { // Rate limit: 15 seconds
+                    return;
+                }
+                
+                const response = await fetch('https://api-v3.mbta.com/vehicles?filter[route_type]=0,1,2&include=route');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                lastUpdateTime = now;
+                
+                if (data.data && data.data.length > 0) {
+                    updateTrainMarkers(data.data);
+                }
+                
+            } catch (error) {
+                console.error('Error fetching MBTA trains:', error);
+            }
+        }
+        
+
+        
+        // Function to update train markers on the map
+        function updateTrainMarkers(trains) {
+            // Clear old train markers
+            trainMarkers.forEach((marker, trainId) => {
+                if (marker && marker.remove) {
+                    marker.remove();
+                }
+            });
+            trainMarkers.clear();
+            
+            // Create new train markers
+            trains.forEach(train => {
+                if (train.attributes && train.attributes.latitude && train.attributes.longitude) {
+                    const trainId = train.id;
+                    const lat = train.attributes.latitude;
+                    const lng = train.attributes.longitude;
+                    const heading = train.attributes.heading || 0;
+                    const speed = train.attributes.speed || 0;
+                    const routeId = train.relationships?.route?.data?.id;
+                    
+                    // Get route name and color with better matching
+                    let routeName = 'Unknown Route';
+                    let color = '#666';
+                    
+                    if (routeId && mbtaStopsData) {
+                        console.log(`Matching route ID: "${routeId}" to available routes...`);
+                        
+                        // Better route matching logic
+                        Object.keys(mbtaStopsData).forEach(name => {
+                            // Check for exact matches first
+                            if (name === routeId || 
+                                name.replace(/\s+/g, '') === routeId ||
+                                name.replace(/\s+/g, '') === routeId.replace(/\s+/g, '') ||
+                                routeId.includes(name.replace(/\s+/g, '')) ||
+                                name.includes(routeId.replace(/\s+/g, ''))) {
+                                routeName = name;
+                                color = lineColors[name] || '#666';
+                                console.log(`Matched "${routeId}" to "${name}"`);
+                            }
+                        });
+                        
+                        // If no match found, try partial matching for commuter rail
+                        if (routeName === 'Unknown Route' && routeId.startsWith('CR-')) {
+                            Object.keys(mbtaStopsData).forEach(name => {
+                                if (name.includes('Line') && routeId.includes(name.split(' ')[0])) {
+                                    routeName = name;
+                                    color = lineColors[name] || '#800080'; // Default purple for commuter rail
+                                    console.log(`Matched commuter rail "${routeId}" to "${name}"`);
+                                }
+                            });
+                        }
+                        
+                        // If still no match, try to identify Green Line routes specifically
+                        if (routeName === 'Unknown Route' && (routeId.includes('Green') || routeId.includes('GL'))) {
+                            routeName = 'Green Line';
+                            color = lineColors['Green Line B'] || '#00843D';
+                            console.log(`Identified Green Line route: "${routeId}"`);
+                        }
+                        
+                        if (routeName === 'Unknown Route') {
+                            console.log(`No match found for route ID: "${routeId}"`);
+                        }
+                    }
+                    
+                    // Create train marker with custom line-specific icons
+                    let trainIcon;
+                    
+                    if (routeName.includes('Red Line') || routeName.includes('Mattapan')) {
+                        trainIcon = L.icon({
+                            iconUrl: 'icons/readlinecirc.png',
+                            iconSize: [24, 24],
+                            iconAnchor: [12, 12]
+                        });
+                    } else if (routeName.includes('Blue Line')) {
+                        trainIcon = L.icon({
+                            iconUrl: 'icons/bluelinecirc.png',
+                            iconSize: [24, 24],
+                            iconAnchor: [12, 12]
+                        });
+                    } else if (routeName.includes('Green Line') || routeName.includes('Green-')) {
+                        trainIcon = L.icon({
+                            iconUrl: 'icons/greenlinecirc.png',
+                            iconSize: [24, 24],
+                            iconAnchor: [12, 12]
+                        });
+                    } else if (routeName.includes('Orange Line')) {
+                        trainIcon = L.icon({
+                            iconUrl: 'icons/orangelinecirc.png',
+                            iconSize: [24, 24],
+                            iconAnchor: [12, 12]
+                        });
+                    } else {
+                        // Use commuter rail icon for all other routes (CapeFlyer, Fairmount, etc.)
+                        trainIcon = L.icon({
+                            iconUrl: 'icons/commuterrailcirc.png',
+                            iconSize: [24, 24],
+                            iconAnchor: [12, 12]
+                        });
+                    }
+                    
+                    const trainMarker = L.marker([lat, lng], {
+                        icon: trainIcon,
+                        zIndexOffset: 1000
+                    });
+                    
+                    // Create popup with train info
+                    const popupContent = `
+                        <div style="color: ${color}; font-weight: bold;">🚂 Live Train</div>
+                        <b>Route:</b> ${routeName}<br>
+                        <b>Speed:</b> ${Math.round(speed * 2.237)} mph<br>
+                        <b>Direction:</b> ${heading}°<br>
+                        <b>Position:</b> ${lat.toFixed(6)}, ${lng.toFixed(6)}<br>
+                        <b>Last Update:</b> ${new Date().toLocaleTimeString()}
+                    `;
+                    
+                    trainMarker.bindPopup(popupContent);
+                    
+                    // Add to map and store reference
+                    trainMarker.addTo(map);
+                    trainMarkers.set(trainId, trainMarker);
+                }
+            });
+            
+            console.log(`Updated ${trainMarkers.size} train markers`);
+        }
+        
+        // Start live tracking
+        function startLiveTracking() {
+            if (trackingInterval) {
+                clearInterval(trackingInterval);
+            }
+            
+            // Initial fetch
+            fetchLiveTrains();
+            
+            // Set up interval for updates
+            trackingInterval = setInterval(fetchLiveTrains, 30000); // Update every 30 seconds
+        }
+        
+
+        
+        // Stop live tracking
+        function stopLiveTracking() {
+            if (trackingInterval) {
+                clearInterval(trackingInterval);
+                trackingInterval = null;
+            }
+            
+            // Clear all train markers
+            trainMarkers.forEach((marker, trainId) => {
+                if (marker && marker.remove) {
+                    marker.remove();
+                }
+            });
+            trainMarkers.clear();
+            
+            console.log('Live train tracking stopped');
+        }
+        
+
+        
+
+        
+
+        
+        // Start tracking after a short delay to let the map load
+        setTimeout(() => {
+            startLiveTracking();
+        }, 2000);
+        
+    </script>
+</body>
+</html>
