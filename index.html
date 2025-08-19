@@ -298,6 +298,10 @@
                         <input type="checkbox" id="show-seasonal">
                         <label for="show-seasonal">Seasonal Rail</label>
                     </div>
+                    <div class="filter-checkbox">
+                        <input type="checkbox" id="show-bus">
+                        <label for="show-bus">All Bus Routes</label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -309,6 +313,9 @@
 
     <!-- Include the MBTA stops data -->
     <script src="mbta-stops-accurate.js"></script>
+    
+    <!-- Include the MBTA bus data -->
+    <script src="mbta-bus-data.js"></script>
 
     <script>
         // Global variables - declare these first
@@ -352,13 +359,26 @@
             }
         }
         
+        // Initialize layers for bus routes
+        if (mbtaBusData && typeof mbtaBusData === 'object') {
+            try {
+                Object.keys(mbtaBusData).forEach(lineName => {
+                    layers[lineName] = L.layerGroup();
+                    map.addLayer(layers[lineName]);
+                });
+            } catch (e) {
+                // Silently handle any errors
+            }
+        }
+        
         // Generate filter checkboxes dynamically
         const filterContainer = document.getElementById('filter-checkboxes');
         
-        // Define subway, commuter rail, and seasonal rail lines
+        // Define subway, commuter rail, seasonal rail, and bus lines
         const subwayLines = ['Red Line', 'Orange Line', 'Blue Line', 'Green Line B', 'Green Line C', 'Green Line D', 'Green Line E', 'Mattapan Trolley'];
         const commuterLines = ['Fairmount Line', 'Fall River/New Bedford Line', 'Fitchburg Line', 'Framingham/Worcester Line', 'Franklin/Foxboro Line', 'Greenbush Line', 'Haverhill Line', 'Kingston Line', 'Lowell Line', 'Needham Line', 'Newburyport/Rockport Line', 'Providence/Stoughton Line', 'Foxboro Event Service'];
         const seasonalLines = ['CapeFLYER'];
+        const busLines = ['71', '73'];
         
 
         
@@ -441,10 +461,36 @@
             updateStats();
         });
         
+        document.getElementById('show-bus').addEventListener('change', function() {
+            const isChecked = this.checked;
+            busLines.forEach(lineName => {
+                if (mbtaBusData[lineName] && layers[lineName]) {
+                    if (isChecked) {
+                        map.addLayer(layers[lineName]);
+                    } else {
+                        map.removeLayer(layers[lineName]);
+                    }
+                }
+            });
+            // Hide/show train markers for bus routes
+            trainMarkers.forEach((marker, trainId) => {
+                if (marker && marker.routeName) {
+                    if (busLines.includes(marker.routeName)) {
+                        if (isChecked) {
+                            marker.addTo(map);
+                        } else {
+                            marker.remove();
+                        }
+                    }
+                }
+            });
+            updateStats();
+        });
+        
         // Color scheme for different lines
         const lineColors = {
             'Red Line': '#DA291C',
-            'Orange Line': '#ED8B00',
+            'Orange Line': '#FF6600',
             'Blue Line': '#003DA5',
             'Green Line B': '#00843D',
             'Green Line C': '#00843D',
@@ -463,7 +509,10 @@
             'Lowell Line': '#800080',
             'Needham Line': '#800080',
             'Newburyport/Rockport Line': '#800080',
-            'Providence/Stoughton Line': '#800080'
+            'Providence/Stoughton Line': '#800080',
+            // Bus routes - all yellow
+            '71': '#FFD700',
+            '73': '#FFD700'
         };
         
 
@@ -597,6 +646,62 @@
             } else {
                 console.error('Cannot create markers: mbtaStopsData or routeShapes is undefined');
             }
+            
+            // Create bus route markers and tracks
+            if (mbtaBusData && busRouteShapes) {
+                Object.keys(mbtaBusData).forEach(lineName => {
+                    const stops = mbtaBusData[lineName];
+                    const color = lineColors[lineName] || '#FFD700';
+                    const routeMarkers = [];
+                    const routeTracks = [];
+                    
+                    // Process bus route shapes
+                    if (busRouteShapes[lineName] && busRouteShapes[lineName].length > 0) {
+                        busRouteShapes[lineName].forEach((shape, shapeIndex) => {
+                            if (shape.coords && shape.coords.length > 1) {
+                                const trackLine = L.polyline(shape.coords, {
+                                    color: color,
+                                    weight: 2,
+                                    opacity: 0.6
+                                });
+                                
+                                trackLine.bindPopup(`<b>Bus Route ${lineName}</b> Shape ${shapeIndex + 1}`);
+                                routeTracks.push(trackLine);
+                            }
+                        });
+                    }
+                    
+                    // Process bus stop markers
+                    stops.forEach(stop => {
+                        const marker = L.circleMarker(stop.coords, {
+                            radius: 4,
+                            fillColor: color,
+                            color: '#fff',
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        });
+                        
+                        marker.bindPopup(`
+                            <b>${stop.name}</b><br>
+                            Type: ${stop.type}<br>
+                            Route: ${lineName}<br>
+                            Coordinates: ${stop.coords[0].toFixed(6)}, ${stop.coords[1].toFixed(6)}
+                        `);
+                        
+                        routeMarkers.push(marker);
+                    });
+                    
+                    // Add markers and tracks to layers
+                    routeMarkers.forEach(marker => {
+                        layers[lineName].addLayer(marker);
+                    });
+                    
+                    routeTracks.forEach(track => {
+                        layers[lineName].addLayer(track);
+                    });
+                });
+            }
         
         // Update stats display (no-op since stats were removed)
         function updateStats() {
@@ -665,7 +770,7 @@
         async function fetchLiveTrains() {
             try {
                 const now = Date.now();
-                if (now - lastUpdateTime < 15000) { // Rate limit: 15 seconds
+                if (now - lastUpdateTime < 5000) { // Rate limit: 5 seconds
                     return;
                 }
                 
@@ -913,7 +1018,7 @@
             fetchLiveTrains();
             
             // Set up interval for updates
-            trackingInterval = setInterval(fetchLiveTrains, 30000); // Update every 30 seconds
+            trackingInterval = setInterval(fetchLiveTrains, 1000); // Update every 1 second
         }
         
 
@@ -945,6 +1050,13 @@
         // Initially hide seasonal rail since checkbox is unchecked
         seasonalLines.forEach(lineName => {
             if (mbtaStopsData[lineName] && layers[lineName]) {
+                map.removeLayer(layers[lineName]);
+            }
+        });
+        
+        // Initially hide bus routes since checkbox is unchecked
+        busLines.forEach(lineName => {
+            if (mbtaBusData[lineName] && layers[lineName]) {
                 map.removeLayer(layers[lineName]);
             }
         });
