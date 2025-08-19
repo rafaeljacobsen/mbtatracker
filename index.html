@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MBTA Tracker - OpenStreetMap Test</title>
+    <title>MBTA Tracker</title>
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -229,6 +229,19 @@
         <div class="panel-content">
             <div class="filter-controls">
                 <h4>Show/Hide Lines:</h4>
+                
+                <!-- Subway and Commuter Rail toggles -->
+                <div class="category-filters">
+                    <div class="filter-checkbox">
+                        <input type="checkbox" id="show-subway" checked>
+                        <label for="show-subway">All Subway Lines</label>
+                    </div>
+                    <div class="filter-checkbox">
+                        <input type="checkbox" id="show-commuter" checked>
+                        <label for="show-commuter">All Commuter Rail</label>
+                    </div>
+                </div>
+                
                 <div id="filter-checkboxes">
                     <!-- Dynamic filter checkboxes will be generated here -->
                 </div>
@@ -287,6 +300,11 @@
         
         // Generate filter checkboxes dynamically
         const filterContainer = document.getElementById('filter-checkboxes');
+        
+        // Define subway and commuter rail lines
+        const subwayLines = ['Red Line', 'Orange Line', 'Blue Line', 'Green Line B', 'Green Line C', 'Green Line D', 'Green Line E', 'Mattapan Trolley'];
+        const commuterLines = ['Fairmount Line', 'Fall River/New Bedford Line', 'Fitchburg Line', 'Framingham/Worcester Line', 'Franklin/Foxboro Line', 'Greenbush Line', 'Haverhill Line', 'Kingston Line', 'Lowell Line', 'Needham Line', 'Newburyport/Rockport Line', 'Providence/Stoughton Line', 'Foxboro Event Service', 'CapeFLYER'];
+        
         if (typeof mbtaStopsData !== 'undefined') {
             Object.keys(mbtaStopsData).forEach(lineName => {
             const checkboxDiv = document.createElement('div');
@@ -316,6 +334,43 @@
             });
             });
         }
+        
+        // Add event listeners for category filters
+        document.getElementById('show-subway').addEventListener('change', function() {
+            const isChecked = this.checked;
+            subwayLines.forEach(lineName => {
+                if (mbtaStopsData[lineName]) {
+                    const checkbox = document.getElementById(lineName.replace(/\s+/g, '-').toLowerCase());
+                    if (checkbox) {
+                        checkbox.checked = isChecked;
+                        if (isChecked) {
+                            map.addLayer(layers[lineName]);
+                        } else {
+                            map.removeLayer(layers[lineName]);
+                        }
+                    }
+                }
+            });
+            updateStats();
+        });
+        
+        document.getElementById('show-commuter').addEventListener('change', function() {
+            const isChecked = this.checked;
+            commuterLines.forEach(lineName => {
+                if (mbtaStopsData[lineName]) {
+                    const checkbox = document.getElementById(lineName.replace(/\s+/g, '-').toLowerCase());
+                    if (checkbox) {
+                        checkbox.checked = isChecked;
+                        if (isChecked) {
+                            map.addLayer(layers[lineName]);
+                        } else {
+                            map.removeLayer(layers[lineName]);
+                        }
+                    }
+                }
+            });
+            updateStats();
+        });
         
         // Color scheme for different lines
         const lineColors = {
@@ -521,11 +576,6 @@
         // Initialize stats
         updateStats();
         
-        // Add some basic controls
-        const zoomControl = L.control.zoom({
-            position: 'bottomright'
-        }).addTo(map);
-        
         // Add scale control
         const scaleControl = L.control.scale({
             position: 'bottomleft'
@@ -584,8 +634,19 @@
                         const lat = train.attributes.latitude;
                         const lng = train.attributes.longitude;
                         const heading = train.attributes.heading || 0;
-                        const speed = train.attributes.speed || 0;
+                        const speed = train.attributes.speed;
+                        const currentStatus = train.attributes.current_status;
                         const routeId = train.relationships?.route?.data?.id;
+                        
+                        // Debug logging for Red Line trains
+                        if (routeId && routeId.includes('Red')) {
+                            console.log('Red Line train debug:', {
+                                speed: speed,
+                                speedType: typeof speed,
+                                currentStatus: currentStatus,
+                                allAttributes: train.attributes
+                            });
+                        }
                         
 
                     
@@ -623,9 +684,20 @@
                         
                         // If still no match, try to identify Green Line routes specifically
                         if (routeName === 'Unknown Route' && (routeId.includes('Green') || routeId.includes('GL'))) {
-                            routeName = 'Green Line';
+                            // Try to match specific Green Line branch
+                            if (routeId.includes('Green-B') || routeId.includes('GL-B')) {
+                                routeName = 'Green Line B';
+                            } else if (routeId.includes('Green-C') || routeId.includes('GL-C')) {
+                                routeName = 'Green Line C';
+                            } else if (routeId.includes('Green-D') || routeId.includes('GL-D')) {
+                                routeName = 'Green Line D';
+                            } else if (routeId.includes('Green-E') || routeId.includes('GL-E')) {
+                                routeName = 'Green Line E';
+                            } else {
+                                routeName = 'Green Line';
+                            }
                             color = lineColors['Green Line B'] || '#00843D';
-                            console.log(`Identified Green Line route: "${routeId}"`);
+                            console.log(`Identified Green Line route: "${routeId}" as "${routeName}"`);
                         }
                         
                         if (routeName === 'Unknown Route') {
@@ -678,14 +750,82 @@
                     const direction = train.attributes.direction_id === 0 ? 'Inbound' : 'Outbound';
                     
                     // Create popup with train info
-                    const popupContent = `
+                    let popupContent = `
                         <div style="color: ${color}; font-weight: bold;">
                             <img src="${trainIcon.options.iconUrl}" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px;">
                             Live Train
                         </div>
-                        <b>Route:</b> ${routeName}<br>
-                        <b>Speed:</b> ${speed > 0 ? Math.round(speed * 2.237) + ' mph' : 'Stopped'}<br>
-                        <b>Direction ID:</b> ${train.attributes.direction_id}<br>
+                        <b>Route:</b> ${routeName}<br>`;
+                    
+                    // Only show speed if it's a valid number
+                    if (speed !== null && speed !== undefined && speed !== 'none' && !isNaN(speed) && speed > 0) {
+                        popupContent += `<b>Speed:</b> ${Math.round(speed * 2.237)} mph<br>`;
+                    }
+                    
+                    // Add current status if available
+                    if (currentStatus) {
+                        let statusText = currentStatus;
+                        if (currentStatus === 'STOPPED_AT') {
+                            statusText = 'Stopped';
+                        } else if (currentStatus === 'IN_TRANSIT_TO') {
+                            statusText = 'In Transit';
+                        } else if (currentStatus === 'INCOMING_AT') {
+                            statusText = 'Incoming';
+                        }
+                        popupContent += `<b>Status:</b> ${statusText}<br>`;
+                    }
+                    
+                    popupContent += `
+                        <b>Train ID:</b> ${trainId}<br>`;
+                    
+                    // Show terminus for specific lines, direction ID for others
+                    if (routeName.includes('Red Line')) {
+                        if (train.attributes.direction_id === 1) {
+                            popupContent += `<b>Terminus:</b> Alewife<br>`;
+                        } else {
+                            popupContent += `<b>Terminus:</b> Ashmont/Braintree<br>`;
+                        }
+                    } else if (routeName.includes('Orange Line')) {
+                        if (train.attributes.direction_id === 1) {
+                            popupContent += `<b>Terminus:</b> Oak Grove<br>`;
+                        } else {
+                            popupContent += `<b>Terminus:</b> Forest Hills<br>`;
+                        }
+                    } else if (routeName.includes('Blue Line')) {
+                        if (train.attributes.direction_id === 1) {
+                            popupContent += `<b>Terminus:</b> Wonderland<br>`;
+                        } else {
+                            popupContent += `<b>Terminus:</b> Bowdoin<br>`;
+                        }
+                    } else if (routeName.includes('Green Line B')) {
+                        if (train.attributes.direction_id === 1) {
+                            popupContent += `<b>Terminus:</b> Government Center<br>`;
+                        } else {
+                            popupContent += `<b>Terminus:</b> Boston College<br>`;
+                        }
+                    } else if (routeName.includes('Green Line C')) {
+                        if (train.attributes.direction_id === 1) {
+                            popupContent += `<b>Terminus:</b> Government Center<br>`;
+                        } else {
+                            popupContent += `<b>Terminus:</b> Cleveland Circle<br>`;
+                        }
+                    } else if (routeName.includes('Green Line D')) {
+                        if (train.attributes.direction_id === 1) {
+                            popupContent += `<b>Terminus:</b> Union Square<br>`;
+                        } else {
+                            popupContent += `<b>Terminus:</b> Riverside<br>`;
+                        }
+                    } else if (routeName.includes('Green Line E')) {
+                        if (train.attributes.direction_id === 1) {
+                            popupContent += `<b>Terminus:</b> Medford/Tufts<br>`;
+                        } else {
+                            popupContent += `<b>Terminus:</b> Heath Street<br>`;
+                        }
+                    } else {
+                        popupContent += `<b>Direction ID:</b> ${train.attributes.direction_id}<br>`;
+                    }
+                    
+                    popupContent += `
                         <b>Position:</b> ${lat.toFixed(6)}, ${lng.toFixed(6)}<br>
                         <b>Last Update:</b> ${new Date().toLocaleTimeString()}
                     `;
