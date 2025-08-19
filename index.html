@@ -32,13 +32,12 @@
             top: 10px;
             left: 10px;
             background: white;
-            padding: 15px;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             z-index: 1000;
-            max-width: 350px;
-            max-height: 80vh;
-            overflow-y: auto;
+            width: 180px;
+            max-height: none;
+            overflow: hidden;
         }
         
         .info-panel h3 {
@@ -62,25 +61,76 @@
         }
         
         .filter-controls {
-            margin: 15px 0;
-            padding: 10px;
+            margin: 8px 0;
+            padding: 8px;
             background: #f8f9fa;
             border-radius: 6px;
         }
         
-        .filter-controls h4 {
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin: 0 0 10px 0;
+        }
+        
+        .filter-controls h4 {
+            margin: 0;
             font-size: 14px;
             color: #555;
         }
         
+        .lines-toggle {
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 24px;
+            height: 24px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .lines-toggle:hover {
+            background: #0056b3;
+        }
+        
+        .lines-toggle.collapsed {
+            transform: rotate(180deg);
+        }
+        
+        .category-filters {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .category-filters.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+        }
+        
         .filter-checkbox {
-            margin: 5px 0;
+            margin: 4px 0;
             font-size: 13px;
+            display: flex;
+            align-items: center;
+            height: 20px;
         }
         
         .filter-checkbox input {
             margin-right: 8px;
+            margin: 0;
+        }
+        
+        .filter-checkbox label {
+            margin: 0;
+            line-height: 1;
         }
         
         .stats {
@@ -107,7 +157,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 15px 10px 15px;
+            padding: 8px 10px 6px 10px;
             border-bottom: 1px solid #eee;
             background: #f8f9fa;
             border-radius: 8px 8px 0 0;
@@ -120,21 +170,23 @@
         
         .panel-toggle {
             position: absolute;
+            right: -30px;
             top: 50%;
             transform: translateY(-50%);
-            background: #007bff;
+            background: #ff4444;
             color: white;
             border: none;
             border-radius: 0 8px 8px 0;
-            width: 20px;
-            height: 40px;
-            font-size: 12px;
+            width: 30px;
+            height: 60px;
+            font-size: 18px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
             z-index: 1001;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.4);
         }
         
         .panel-toggle:hover {
@@ -143,9 +195,9 @@
         }
         
         .panel-content {
-            padding: 15px;
-            max-height: 50vh;
-            overflow-y: auto;
+            padding: 10px;
+            max-height: none;
+            overflow-y: visible;
         }
         
         .panel-hidden {
@@ -154,6 +206,7 @@
         
         .panel-hidden .panel-toggle {
             right: -20px;
+            background: #666;
         }
         
         .info-panel {
@@ -220,18 +273,19 @@
 <body>
     <div id="map"></div>
     
-    <div class="info-panel" id="info-panel" style="display: none;">
+    <div class="info-panel" id="info-panel">
         <button class="panel-toggle" onclick="togglePanel('info-panel')">◀</button>
-        <div class="panel-header">
-            <h3>MBTA Tracker</h3>
-        </div>
+
         
         <div class="panel-content">
             <div class="filter-controls">
-                <h4>Show/Hide Lines:</h4>
+                <div class="filter-header">
+                    <h4>Show/Hide Lines:</h4>
+                    <button class="lines-toggle" onclick="toggleLinesSection()" title="Hide/Show Lines Section">−</button>
+                </div>
                 
-                <!-- Subway and Commuter Rail toggles -->
-                <div class="category-filters">
+                <!-- Subway, Commuter Rail, and Seasonal Rail toggles -->
+                <div class="category-filters" id="lines-section">
                     <div class="filter-checkbox">
                         <input type="checkbox" id="show-subway" checked>
                         <label for="show-subway">All Subway Lines</label>
@@ -240,16 +294,11 @@
                         <input type="checkbox" id="show-commuter" checked>
                         <label for="show-commuter">All Commuter Rail</label>
                     </div>
+                    <div class="filter-checkbox">
+                        <input type="checkbox" id="show-seasonal">
+                        <label for="show-seasonal">Seasonal Rail</label>
+                    </div>
                 </div>
-                
-                <div id="filter-checkboxes">
-                    <!-- Dynamic filter checkboxes will be generated here -->
-                </div>
-            </div>
-            
-            <div class="stats">
-                <strong>Total Stops:</strong> <span id="total-stops">0</span><br>
-                <strong>Visible Stops:</strong> <span id="visible-stops">0</span>
             </div>
         </div>
     </div>
@@ -270,10 +319,11 @@
         let lastUpdateTime = 0;
         let lastAmtrakUpdateTime = 0;
         
-        // Check if data loaded properly
-        if (typeof mbtaStopsData === 'undefined') {
-            document.getElementById('status').textContent = 'Error: MBTA data not loaded';
-            document.getElementById('status').style.color = 'red';
+        // Check if data is ready before proceeding
+        if (typeof mbtaStopsData === 'undefined' || !mbtaStopsData) {
+            document.getElementById('map').innerHTML = '<div style="text-align: center; padding: 50px; font-size: 18px; color: #666;">Loading MBTA data...</div>';
+            // Don't run any more code
+            throw new Error('MBTA data not loaded');
         }
         
         // Initialize the map centered on Boston
@@ -291,62 +341,47 @@
         const layers = {};
         
         // Initialize layers for all lines
-        if (typeof mbtaStopsData !== 'undefined') {
-            Object.keys(mbtaStopsData).forEach(lineName => {
-                layers[lineName] = L.layerGroup();
-                map.addLayer(layers[lineName]);
-            });
+        if (mbtaStopsData && typeof mbtaStopsData === 'object') {
+            try {
+                Object.keys(mbtaStopsData).forEach(lineName => {
+                    layers[lineName] = L.layerGroup();
+                    map.addLayer(layers[lineName]);
+                });
+            } catch (e) {
+                // Silently handle any errors
+            }
         }
         
         // Generate filter checkboxes dynamically
         const filterContainer = document.getElementById('filter-checkboxes');
         
-        // Define subway and commuter rail lines
+        // Define subway, commuter rail, and seasonal rail lines
         const subwayLines = ['Red Line', 'Orange Line', 'Blue Line', 'Green Line B', 'Green Line C', 'Green Line D', 'Green Line E', 'Mattapan Trolley'];
-        const commuterLines = ['Fairmount Line', 'Fall River/New Bedford Line', 'Fitchburg Line', 'Framingham/Worcester Line', 'Franklin/Foxboro Line', 'Greenbush Line', 'Haverhill Line', 'Kingston Line', 'Lowell Line', 'Needham Line', 'Newburyport/Rockport Line', 'Providence/Stoughton Line', 'Foxboro Event Service', 'CapeFLYER'];
+        const commuterLines = ['Fairmount Line', 'Fall River/New Bedford Line', 'Fitchburg Line', 'Framingham/Worcester Line', 'Franklin/Foxboro Line', 'Greenbush Line', 'Haverhill Line', 'Kingston Line', 'Lowell Line', 'Needham Line', 'Newburyport/Rockport Line', 'Providence/Stoughton Line', 'Foxboro Event Service'];
+        const seasonalLines = ['CapeFLYER'];
         
-        if (typeof mbtaStopsData !== 'undefined') {
-            Object.keys(mbtaStopsData).forEach(lineName => {
-            const checkboxDiv = document.createElement('div');
-            checkboxDiv.className = 'filter-checkbox';
-            
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.id = lineName.replace(/\s+/g, '-').toLowerCase();
-            checkbox.checked = true;
-            
-            const label = document.createElement('label');
-            label.htmlFor = checkbox.id;
-            label.textContent = lineName;
-            
-            checkboxDiv.appendChild(checkbox);
-            checkboxDiv.appendChild(label);
-            filterContainer.appendChild(checkboxDiv);
-            
-            // Add event listener
-            checkbox.addEventListener('change', function() {
-                if (this.checked) {
-                    map.addLayer(layers[lineName]);
-                } else {
-                    map.removeLayer(layers[lineName]);
-                }
-                updateStats();
-            });
-            });
-        }
+
         
         // Add event listeners for category filters
         document.getElementById('show-subway').addEventListener('change', function() {
             const isChecked = this.checked;
             subwayLines.forEach(lineName => {
-                if (mbtaStopsData[lineName]) {
-                    const checkbox = document.getElementById(lineName.replace(/\s+/g, '-').toLowerCase());
-                    if (checkbox) {
-                        checkbox.checked = isChecked;
+                if (mbtaStopsData[lineName] && layers[lineName]) {
+                    if (isChecked) {
+                        map.addLayer(layers[lineName]);
+                    } else {
+                        map.removeLayer(layers[lineName]);
+                    }
+                }
+            });
+            // Hide/show train markers for subway lines
+            trainMarkers.forEach((marker, trainId) => {
+                if (marker && marker.routeName) {
+                    if (subwayLines.includes(marker.routeName)) {
                         if (isChecked) {
-                            map.addLayer(layers[lineName]);
+                            marker.addTo(map);
                         } else {
-                            map.removeLayer(layers[lineName]);
+                            marker.remove();
                         }
                     }
                 }
@@ -357,14 +392,48 @@
         document.getElementById('show-commuter').addEventListener('change', function() {
             const isChecked = this.checked;
             commuterLines.forEach(lineName => {
-                if (mbtaStopsData[lineName]) {
-                    const checkbox = document.getElementById(lineName.replace(/\s+/g, '-').toLowerCase());
-                    if (checkbox) {
-                        checkbox.checked = isChecked;
+                if (mbtaStopsData[lineName] && layers[lineName]) {
+                    if (isChecked) {
+                        map.addLayer(layers[lineName]);
+                    } else {
+                        map.removeLayer(layers[lineName]);
+                    }
+                }
+            });
+            // Hide/show train markers for commuter rail lines
+            trainMarkers.forEach((marker, trainId) => {
+                if (marker && marker.routeName) {
+                    if (commuterLines.includes(marker.routeName)) {
                         if (isChecked) {
-                            map.addLayer(layers[lineName]);
+                            marker.addTo(map);
                         } else {
-                            map.removeLayer(layers[lineName]);
+                            marker.remove();
+                        }
+                    }
+                }
+            });
+            updateStats();
+        });
+        
+        document.getElementById('show-seasonal').addEventListener('change', function() {
+            const isChecked = this.checked;
+            seasonalLines.forEach(lineName => {
+                if (mbtaStopsData[lineName] && layers[lineName]) {
+                    if (isChecked) {
+                        map.addLayer(layers[lineName]);
+                    } else {
+                        map.removeLayer(layers[lineName]);
+                    }
+                }
+            });
+            // Hide/show train markers for seasonal rail lines
+            trainMarkers.forEach((marker, trainId) => {
+                if (marker && marker.routeName) {
+                    if (seasonalLines.includes(marker.routeName)) {
+                        if (isChecked) {
+                            marker.addTo(map);
+                        } else {
+                            marker.remove();
                         }
                     }
                 }
@@ -529,24 +598,9 @@
                 console.error('Cannot create markers: mbtaStopsData or routeShapes is undefined');
             }
         
-        // Update stats display
+        // Update stats display (no-op since stats were removed)
         function updateStats() {
-            // Update stats
-            let totalStops = 0;
-            if (typeof mbtaStopsData !== 'undefined') {
-                Object.values(mbtaStopsData).forEach(stops => {
-                    totalStops += stops.length;
-                });
-            }
-            document.getElementById('total-stops').textContent = totalStops;
-            
-            let visibleCount = 0;
-            Object.values(layers).forEach(layer => {
-                if (map.hasLayer(layer)) {
-                    visibleCount += layer.getLayers().length;
-                }
-            });
-            document.getElementById('visible-stops').textContent = visibleCount;
+            // Stats display was removed - function kept for compatibility
         }
         
 
@@ -570,6 +624,24 @@
                 // Hide panel
                 panel.classList.add('panel-hidden');
                 toggle.textContent = '▶';
+            }
+        }
+        
+        // Lines section toggle functionality
+        function toggleLinesSection() {
+            const linesSection = document.getElementById('lines-section');
+            const toggle = document.querySelector('.lines-toggle');
+            
+            if (linesSection.classList.contains('collapsed')) {
+                // Show lines section
+                linesSection.classList.remove('collapsed');
+                toggle.textContent = '−';
+                toggle.classList.remove('collapsed');
+            } else {
+                // Hide lines section
+                linesSection.classList.add('collapsed');
+                toggle.textContent = '+';
+                toggle.classList.add('collapsed');
             }
         }
         
@@ -638,15 +710,7 @@
                         const currentStatus = train.attributes.current_status;
                         const routeId = train.relationships?.route?.data?.id;
                         
-                        // Debug logging for Red Line trains
-                        if (routeId && routeId.includes('Red')) {
-                            console.log('Red Line train debug:', {
-                                speed: speed,
-                                speedType: typeof speed,
-                                currentStatus: currentStatus,
-                                allAttributes: train.attributes
-                            });
-                        }
+
                         
 
                     
@@ -658,50 +722,45 @@
 
                         
                         // Better route matching logic
-                        Object.keys(mbtaStopsData).forEach(name => {
-                            // Check for exact matches first
-                            if (name === routeId || 
-                                name.replace(/\s+/g, '') === routeId ||
-                                name.replace(/\s+/g, '') === routeId.replace(/\s+/g, '') ||
-                                routeId.includes(name.replace(/\s+/g, '')) ||
-                                name.includes(routeId.replace(/\s+/g, ''))) {
-                                routeName = name;
-                                color = lineColors[name] || '#666';
-                                console.log(`Matched "${routeId}" to "${name}"`);
-                            }
-                        });
-                        
-                        // If no match found, try partial matching for commuter rail
-                        if (routeName === 'Unknown Route' && routeId.startsWith('CR-')) {
+                        if (mbtaStopsData) {
                             Object.keys(mbtaStopsData).forEach(name => {
-                                if (name.includes('Line') && routeId.includes(name.split(' ')[0])) {
+                                // Check for exact matches first
+                                if (name === routeId || 
+                                    name.replace(/\s+/g, '') === routeId ||
+                                    name.replace(/\s+/g, '') === routeId.replace(/\s+/g, '') ||
+                                    routeId.includes(name.replace(/\s+/g, '')) ||
+                                    name.includes(routeId.replace(/\s+/g, ''))) {
                                     routeName = name;
-                                    color = lineColors[name] || '#800080'; // Default purple for commuter rail
-                                    console.log(`Matched commuter rail "${routeId}" to "${name}"`);
+                                    color = lineColors[name] || '#666';
                                 }
                             });
-                        }
-                        
-                        // If still no match, try to identify Green Line routes specifically
-                        if (routeName === 'Unknown Route' && (routeId.includes('Green') || routeId.includes('GL'))) {
-                            // Try to match specific Green Line branch
-                            if (routeId.includes('Green-B') || routeId.includes('GL-B')) {
-                                routeName = 'Green Line B';
-                            } else if (routeId.includes('Green-C') || routeId.includes('GL-C')) {
-                                routeName = 'Green Line C';
-                            } else if (routeId.includes('Green-D') || routeId.includes('GL-D')) {
-                                routeName = 'Green Line D';
-                            } else if (routeId.includes('Green-E') || routeId.includes('GL-E')) {
-                                routeName = 'Green Line E';
-                            } else {
-                                routeName = 'Green Line';
+                            
+                            // If no match found, try partial matching for commuter rail
+                            if (routeName === 'Unknown Route' && routeId.startsWith('CR-')) {
+                                Object.keys(mbtaStopsData).forEach(name => {
+                                    if (name.includes('Line') && routeId.includes(name.split(' ')[0])) {
+                                        routeName = name;
+                                        color = lineColors[name] || '#800080'; // Default purple for commuter rail
+                                    }
+                                });
                             }
-                            color = lineColors['Green Line B'] || '#00843D';
-                            console.log(`Identified Green Line route: "${routeId}" as "${routeName}"`);
-                        }
-                        
-                        if (routeName === 'Unknown Route') {
-                            console.log(`No match found for route ID: "${routeId}"`);
+                            
+                            // If still no match, try to identify Green Line routes specifically
+                            if (routeName === 'Unknown Route' && (routeId.includes('Green') || routeId.includes('GL'))) {
+                                // Try to match specific Green Line branch
+                                if (routeId.includes('Green-B') || routeId.includes('GL-B')) {
+                                    routeName = 'Green Line B';
+                                } else if (routeId.includes('Green-C') || routeId.includes('GL-C')) {
+                                    routeName = 'Green Line C';
+                                } else if (routeId.includes('Green-D') || routeId.includes('GL-D')) {
+                                    routeName = 'Green Line D';
+                                } else if (routeId.includes('Green-E') || routeId.includes('GL-E')) {
+                                    routeName = 'Green Line E';
+                                } else {
+                                    routeName = 'Green Line';
+                                }
+                                color = lineColors['Green Line B'] || '#00843D';
+                            }
                         }
                     }
                     
@@ -832,13 +891,16 @@
                     
                     trainMarker.bindPopup(popupContent);
                     
+                    // Store route name with marker for filtering
+                    trainMarker.routeName = routeName;
+                    
                     // Add to map and store reference
                     trainMarker.addTo(map);
                     trainMarkers.set(trainId, trainMarker);
                 }
             });
             
-            console.log(`Updated ${trainMarkers.size} train markers`);
+
         }
         
         // Start live tracking
@@ -871,7 +933,7 @@
             });
             trainMarkers.clear();
             
-            console.log('Live train tracking stopped');
+
         }
         
 
@@ -879,6 +941,13 @@
 
         
 
+        
+        // Initially hide seasonal rail since checkbox is unchecked
+        seasonalLines.forEach(lineName => {
+            if (mbtaStopsData[lineName] && layers[lineName]) {
+                map.removeLayer(layers[lineName]);
+            }
+        });
         
         // Start tracking after a short delay to let the map load
         setTimeout(() => {
