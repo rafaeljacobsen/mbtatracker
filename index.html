@@ -535,6 +535,9 @@
                     startLiveTracking();
                 }
             } else {
+                // Stop bus tracking specifically
+                stopLiveTrackingForCategory('bus');
+                
                 // Check if any other categories are checked
                 const hasSubway = document.getElementById('show-subway').checked;
                 const hasCommuter = document.getElementById('show-commuter').checked;
@@ -863,7 +866,7 @@
                                 // Decode the encoded polyline from the API
                                 const coords = polyline.decode(shape.polyline);
                                 if (coords && coords.length > 1) {
-                                    console.log(`Creating polyline for shape ${shapeIndex} with ${coords.length} coords from encoded polyline`);
+            
                                     const trackLine = L.polyline(coords, {
                                         color: color,
                                         weight: 2,
@@ -901,7 +904,7 @@
                     }
                     
                     // Add markers and tracks to layers
-                    console.log(`Adding ${routeMarkers.length} markers and ${routeTracks.length} tracks to layer ${lineName}`);
+                    
                     routeMarkers.forEach(marker => {
                         layers[lineName].addLayer(marker);
                     });
@@ -911,7 +914,7 @@
                     });
                     
                     // Add the layer to the map
-                    console.log(`Adding bus layer ${lineName} to map`);
+                    
                     layers[lineName].addTo(map);
                 });
             }
@@ -1232,7 +1235,7 @@
 
                 // Check if AmtrakV3Client class is available
                 if (typeof AmtrakV3Client === 'undefined') {
-                    console.log('AmtrakV3Client not yet loaded, skipping Amtrak train fetch');
+    
                     return;
                 }
 
@@ -1465,7 +1468,7 @@
                 }
 
                 const healthData = await amtrakClient.getStaleStatus();
-                console.log('Amtrak feed health:', healthData);
+
                 
                 // Display health info in console or could be shown on map
                 if (healthData) {
@@ -1473,7 +1476,7 @@
                     const activeTrains = healthData.activeTrains || 0;
                     const isStale = healthData.stale || false;
                     
-                    console.log(`Amtrak Feed Health: ${activeTrains} active trains, last update: ${avgUpdate}, stale: ${isStale}`);
+    
                 }
                 
                 return healthData;
@@ -1490,15 +1493,15 @@
                     amtrakClient = new AmtrakV3Client();
                 }
 
-                console.log(`Getting info for Amtrak train: ${trainIdOrNum}`);
+
                 const trainData = await amtrakClient.getTrain(trainIdOrNum);
                 
                 if (trainData && Object.keys(trainData).length > 0) {
                     const trainRecords = AmtrakV3Client.trainsDictToRecords(trainData);
-                    console.log(`Train ${trainIdOrNum} info:`, trainRecords);
+    
                     return trainRecords;
                 } else {
-                    console.log(`No data found for train ${trainIdOrNum}`);
+    
                     return null;
                 }
             } catch (error) {
@@ -1538,7 +1541,7 @@
                     });
 
                     const msg = `[${i+1}/${iterations}] fetched ${rows.length} train rows`;
-                    console.log(msg + (trainIdsOrNums ? ` across ${trainIdsOrNums.length} target(s)` : ''));
+    
 
                     if (i < iterations - 1) {
                         await new Promise(resolve => setTimeout(resolve, intervalSec * 1000));
@@ -1651,7 +1654,6 @@
                 
             } catch (error) {
                 console.error('Error loading Amtrak routes from API:', error);
-                console.log('Falling back to hardcoded routes...');
                 loadHardcodedAmtrakRoutes();
             }
         }
@@ -2278,20 +2280,23 @@
                     const currentStatus = bus.attributes.current_status;
                     const routeId = bus.relationships?.route?.data?.id;
                     
+
+                    
                     // Get route name and color
                     let routeName = 'Unknown Bus Route';
                     let color = '#FFD700'; // Default bus gold
                     
-                    if (routeId && mbtaBusData) {
-                        if (mbtaBusData[routeId]) {
-                            routeName = `Bus Route ${routeId}`;
-                            color = lineColors[routeId] || '#FFD700';
-                        }
+
+                    
+                    if (routeId) {
+                        // Always show the route ID from the API, don't try to match with our data
+                        routeName = `Bus Route ${routeId}`;
+                        color = lineColors[routeId] || '#FFD700';
                     }
                     
                     // Create bus marker with bus icon
                     const busIcon = L.icon({
-                        iconUrl: 'icons/commuterrailcirc.png', // Use commuter rail icon for now
+                        iconUrl: 'icons/buscirc.png',
                         iconSize: [20, 20],
                         iconAnchor: [10, 10]
                     });
