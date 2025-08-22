@@ -2410,13 +2410,6 @@
         
 
         
-        // Initially hide seasonal rail since checkbox is unchecked
-        seasonalLines.forEach(lineName => {
-            if (mbtaStopsData[lineName] && layers[lineName]) {
-                map.removeLayer(layers[lineName]);
-            }
-        });
-        
         // Initially show all layers since all checkboxes are checked by default
         if (mbtaStopsData && typeof mbtaStopsData === 'object') {
             Object.keys(mbtaStopsData).forEach(lineName => {
@@ -2442,23 +2435,11 @@
             });
         }
         
-        // Initially hide ferry routes since checkbox is unchecked
-        ferryLines.forEach(lineName => {
-            if (mbtaFerryData[lineName] && layers[lineName]) {
-                map.removeLayer(layers[lineName]);
-            }
-        });
-        
-        // Initially hide Amtrak routes since checkbox is unchecked
-        // (Amtrak routes are loaded dynamically when checkbox is checked)
-        
-        // Load Amtrak data if checkbox is checked by default
-        if (document.getElementById('show-amtrak').checked) {
-            setTimeout(() => {
-                loadAmtrakRoutes();
-                loadAmtrakStations();
-            }, 1000);
-        }
+        // Load Amtrak data since checkbox is checked by default
+        setTimeout(() => {
+            loadAmtrakRoutes();
+            loadAmtrakStations();
+        }, 1000);
         
         // Start tracking after a short delay to let the map load
         setTimeout(() => {
